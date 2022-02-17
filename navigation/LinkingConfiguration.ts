@@ -40,14 +40,15 @@ const linking: LinkingOptions<RootStackParamList> = {
               TasksScreen: "Task",
             },
           },
-          User: {
+          Users: {
             screens: {
-              UserScreen: "User",
+              UserScreen: "Users",
             },
           },
         },
       },
       Settings: "Settings",
+      UserEdit: "UserEdit",
       NotFound: "*",
     },
   },
