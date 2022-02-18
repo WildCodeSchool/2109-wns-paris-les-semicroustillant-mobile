@@ -3,163 +3,165 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { FontAwesome } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-	NavigationContainer,
-	DefaultTheme,
-	DarkTheme,
-} from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import * as React from 'react'
-import { ColorSchemeName, Pressable } from 'react-native'
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from 'react';
+import { ColorSchemeName, Pressable } from 'react-native';
 
-import Colors from '../constants/Colors'
-import useColorScheme from '../hooks/useColorScheme'
-import SettingsScreen from '../screens/SettingsScreen'
-import NotFoundScreen from '../screens/NotFoundScreen'
-import TabOneScreen from '../screens/TabOneScreen'
-import TabTwoScreen from '../screens/TabTwoScreen'
-import LoginScreen from '../screens/LoginScreen'
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
+import SettingsScreen from '../screens/SettingsScreen';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import TabOneScreen from '../screens/TabOneScreen';
+import TabTwoScreen from '../screens/TabTwoScreen';
+import UserScreen from '../screens/UserScreen';
+import UserEditScreen from '../screens/UserEditScreen';
+import ProjectScreen from '../screens/ProjectScreen';
 import {
-	RootStackParamList,
-	RootTabParamList,
-	RootTabScreenProps,
-} from '../types'
-import LinkingConfiguration from './LinkingConfiguration'
-import UserEditScreen from '../screens/UserEditScreen'
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from '../types';
+import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({
-	colorScheme,
+  colorScheme,
 }: {
-	colorScheme: ColorSchemeName
+  colorScheme: ColorSchemeName;
 }) {
-	return (
-		<NavigationContainer
-			linking={LinkingConfiguration}
-			theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-		>
-			<RootNavigator />
-		</NavigationContainer>
-	)
+  return (
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+    >
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<RootStackParamList>()
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name='Root'
-				component={BottomTabNavigator}
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
-				name='NotFound'
-				component={NotFoundScreen}
-				options={{ title: 'Oops!' }}
-			/>
-			<Stack.Group screenOptions={{ presentation: 'modal' }}>
-				<Stack.Screen name='Settings' component={SettingsScreen} />
-			</Stack.Group>
-			<Stack.Group screenOptions={{ presentation: 'modal' }}>
-				<Stack.Screen
-					name='UserEdit'
-					component={UserEditScreen}
-					options={{
-						title: 'Edit a user',
-					}}
-				/>
-			</Stack.Group>
-		</Stack.Navigator>
-	)
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: 'Oops!' }}
+      />
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen
+          name="UserEdit"
+          component={UserEditScreen}
+          options={{
+            title: 'Edit a user',
+          }}
+        />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
 }
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>()
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-	const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
 
-	return (
-		<BottomTab.Navigator
-			initialRouteName='Projects'
-			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
-			}}
-		>
-			<BottomTab.Screen
-				name='TabOne'
-				component={TabOneScreen}
-				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-					title: 'Tab One',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-					headerRight: () => (
-						<Pressable
-							onPress={() => navigation.navigate('Settings')}
-							style={({ pressed }) => ({
-								opacity: pressed ? 0.5 : 1,
-							})}
-						>
-							<FontAwesome
-								name='gear'
-								size={25}
-								color={Colors[colorScheme].text}
-								style={{ marginRight: 15 }}
-							/>
-						</Pressable>
-					),
-				})}
-			/>
-			<BottomTab.Screen
-				name='Login'
-				component={LoginScreen}
-				options={{
-					title: 'Login',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-			<BottomTab.Screen
-				name='Projects'
-				component={TabTwoScreen}
-				options={{
-					title: 'Project',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-			<BottomTab.Screen
-				name='Tasks'
-				component={TabTwoScreen}
-				options={{
-					title: 'Tasks',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-			<BottomTab.Screen
-				name='Users'
-				component={TabTwoScreen}
-				options={{
-					title: 'Your user infos',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-		</BottomTab.Navigator>
-	)
+  return (
+    <BottomTab.Navigator
+      initialRouteName="Projects"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+      }}
+    >
+      <BottomTab.Screen
+        name="Projects"
+        component={TabTwoScreen}
+        options={({ navigation }: RootTabScreenProps<"Projects">) => ({
+          title: "Projects",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="folder-open" color={color} />
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Settings')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <FontAwesome
+                name="gear"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="Tasks"
+        component={TabTwoScreen}
+        options={({ navigation }: RootTabScreenProps<"Tasks">) => ({
+          title: "Tasks",
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <FontAwesome
+                name="gear"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="Users"
+        component={UserScreen}
+        options={{
+          title: 'Users',
+          tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
 }
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>['name']
-	color: string
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
 }) {
-	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />
+  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
