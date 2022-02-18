@@ -27,6 +27,7 @@ import {
 	RootTabScreenProps,
 } from '../types'
 import LinkingConfiguration from './LinkingConfiguration'
+import UserEditScreen from '../screens/UserEditScreen'
 
 export default function Navigation({
 	colorScheme,
@@ -64,6 +65,15 @@ function RootNavigator() {
 			/>
 			<Stack.Group screenOptions={{ presentation: 'modal' }}>
 				<Stack.Screen name='Settings' component={SettingsScreen} />
+			</Stack.Group>
+			<Stack.Group screenOptions={{ presentation: 'modal' }}>
+				<Stack.Screen
+					name='UserEdit'
+					component={UserEditScreen}
+					options={{
+						title: 'Edit a user',
+					}}
+				/>
 			</Stack.Group>
 		</Stack.Navigator>
 	)
@@ -133,7 +143,7 @@ function BottomTabNavigator() {
 				}}
 			/>
 			<BottomTab.Screen
-				name='User'
+				name='Users'
 				component={TabTwoScreen}
 				options={{
 					title: 'Your user infos',

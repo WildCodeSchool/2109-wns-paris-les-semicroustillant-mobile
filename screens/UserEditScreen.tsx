@@ -1,64 +1,52 @@
 import { StyleSheet, SafeAreaView, SectionList, Pressable } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { FontAwesome, Feather } from '@expo/vector-icons';
 import { RootTabScreenProps } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
 
-const fakeData: any = [
-  {
-    data: [
-      {
-        _id: 1,
-        firstname: 'Bobby',
-        lastname: 'Billy',
-        email: 'bobi@email.com',
-        hash: 'myhashbob',
-        role: 'user',
-        position: 'Developer',
-      },
-      {
-        _id: 2,
-        firstname: 'Jane',
-        lastname: 'Fixme',
-        email: 'jfix@email.com',
-        hash: 'myhashfix',
-        role: 'user',
-        position: 'Developer',
-      },
-    ],
-  },
-];
-
-export default function UserScreen({
-  navigation,
+export default function UserEditScreen({
+  route,
 }: RootTabScreenProps<'Users'>) {
   const colorScheme = useColorScheme();
+
+  const fakeData: any = [
+    {
+      data: [ route.params === 1
+        ?
+        {
+          _id: 1,
+          firstname: 'Bobby',
+          lastname: 'Billy',
+          email: 'bobi@email.com',
+          hash: 'myhashbob',
+          role: 'user',
+          position: 'Developer',
+        }
+        :
+        {
+          _id: 2,
+          firstname: 'Jane',
+          lastname: 'Fixme',
+          email: 'jfix@email.com',
+          hash: 'myhashfix',
+          role: 'user',
+          position: 'Developer',
+        }
+      ],
+    },
+  ];
 
   const UserItem = (user: any) => {
     return (
       <View style={styles.item}>
         <Text style={styles.names}>{user.item.firstname}</Text>
         <Text style={styles.names}>{user.item.lastname}</Text>
-        <Text style={styles.position}>{user.item.position}</Text>
         <View
           style={styles.separator}
           lightColor="#eee"
           darkColor="rgba(255,255,255,0.1)"
         />
-        <Pressable
-          onPress={() => navigation.navigate('UserEdit', user.item._id)}
-          style={({ pressed }) => ({
-            opacity: pressed ? 0.5 : 1,
-          })}
-        >
-          <Feather
-            name="edit"
-            size={25}
-            color={Colors[colorScheme].text}
-            style={{ marginRight: 15 }}
-          />
-        </Pressable>
+        <Text style={styles.position}>{user.item.email}</Text>
+        <Text style={styles.position}>{user.item.position}</Text>
       </View>
     );
   };
