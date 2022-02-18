@@ -24,6 +24,7 @@ import LoginScreen from "../screens/LoginScreen";
 import UserScreen from "../screens/UserScreen";
 import UserEditScreen from "../screens/UserEditScreen";
 import ProjectsScreen from "../screens/ProjectsScreen";
+import TasksScreen from "../screens/TasksScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -147,7 +148,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Tasks"
-        component={TabTwoScreen}
+        component={TasksScreen}
         options={({ navigation }: RootTabScreenProps<"Tasks">) => ({
           title: "Tasks",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
