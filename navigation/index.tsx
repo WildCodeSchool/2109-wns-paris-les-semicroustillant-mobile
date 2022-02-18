@@ -21,13 +21,15 @@ import NotFoundScreen from '../screens/NotFoundScreen'
 import TabOneScreen from '../screens/TabOneScreen'
 import TabTwoScreen from '../screens/TabTwoScreen'
 import LoginScreen from '../screens/LoginScreen'
+import UserScreen from '../screens/UserScreen'
+import UserEditScreen from '../screens/UserEditScreen'
+import ProjectsScreen from '../screens/ProjectsScreen'
 import {
 	RootStackParamList,
 	RootTabParamList,
 	RootTabScreenProps,
 } from '../types'
 import LinkingConfiguration from './LinkingConfiguration'
-import UserEditScreen from '../screens/UserEditScreen'
 
 export default function Navigation({
 	colorScheme,
@@ -90,17 +92,29 @@ function BottomTabNavigator() {
 
 	return (
 		<BottomTab.Navigator
-			initialRouteName='Projects'
+			initialRouteName='Login'
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme].tint,
 			}}
 		>
 			<BottomTab.Screen
-				name='TabOne'
-				component={TabOneScreen}
-				options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-					title: 'Tab One',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+				name='Login'
+				component={LoginScreen}
+				options={{
+					title: 'Login',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name='arrow-right' color={color} />
+					),
+				}}
+			/>
+			<BottomTab.Screen
+				name='Projects'
+				component={ProjectsScreen}
+				options={({ navigation }: RootTabScreenProps<'Projects'>) => ({
+					title: 'Projects',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name='folder-open' color={color} />
+					),
 					headerRight: () => (
 						<Pressable
 							onPress={() => navigation.navigate('Settings')}
@@ -119,36 +133,50 @@ function BottomTabNavigator() {
 				})}
 			/>
 			<BottomTab.Screen
-				name='Login'
-				component={LoginScreen}
-				options={{
-					title: 'Login',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-			<BottomTab.Screen
-				name='Projects'
-				component={TabTwoScreen}
-				options={{
-					title: 'Project',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
-			/>
-			<BottomTab.Screen
 				name='Tasks'
 				component={TabTwoScreen}
-				options={{
+				options={({ navigation }: RootTabScreenProps<'Tasks'>) => ({
 					title: 'Tasks',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
+					tabBarIcon: ({ color }) => <TabBarIcon name='list' color={color} />,
+					headerRight: () => (
+						<Pressable
+							onPress={() => navigation.navigate('Settings')}
+							style={({ pressed }) => ({
+								opacity: pressed ? 0.5 : 1,
+							})}
+						>
+							<FontAwesome
+								name='gear'
+								size={25}
+								color={Colors[colorScheme].text}
+								style={{ marginRight: 15 }}
+							/>
+						</Pressable>
+					),
+				})}
 			/>
 			<BottomTab.Screen
 				name='Users'
-				component={TabTwoScreen}
-				options={{
-					title: 'Your user infos',
-					tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
-				}}
+				component={UserScreen}
+				options={({ navigation }: RootTabScreenProps<'Users'>) => ({
+					title: 'Users',
+					tabBarIcon: ({ color }) => <TabBarIcon name='users' color={color} />,
+					headerRight: () => (
+						<Pressable
+							onPress={() => navigation.navigate('Settings')}
+							style={({ pressed }) => ({
+								opacity: pressed ? 0.5 : 1,
+							})}
+						>
+							<FontAwesome
+								name='gear'
+								size={25}
+								color={Colors[colorScheme].text}
+								style={{ marginRight: 15 }}
+							/>
+						</Pressable>
+					),
+				})}
 			/>
 		</BottomTab.Navigator>
 	)
