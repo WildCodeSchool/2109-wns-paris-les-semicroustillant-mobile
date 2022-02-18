@@ -23,7 +23,7 @@ import TabTwoScreen from "../screens/TabTwoScreen";
 import LoginScreen from "../screens/LoginScreen";
 import UserScreen from "../screens/UserScreen";
 import UserEditScreen from "../screens/UserEditScreen";
-import ProjectScreen from "../screens/ProjectScreen";
+import ProjectsScreen from "../screens/ProjectsScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -92,14 +92,24 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Projects"
+      initialRouteName="Login"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: "Login",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="arrow-right" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
         name="Projects"
-        component={TabTwoScreen}
+        component={ProjectsScreen}
         options={({ navigation }: RootTabScreenProps<"Projects">) => ({
           title: "Projects",
           tabBarIcon: ({ color }) => (
@@ -126,7 +136,7 @@ function BottomTabNavigator() {
         name="Tasks"
         component={TabTwoScreen}
         options={({ navigation }: RootTabScreenProps<"Tasks">) => ({
-          title: "",
+          title: "Tasks",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
           headerRight: () => (
             <Pressable
@@ -167,16 +177,6 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
-      />
-      <BottomTab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          title: "Login",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="arrow-right" color={color} />
-          ),
-        }}
       />
     </BottomTab.Navigator>
   );
