@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'blue',
-    borderWidth: 2,
+    // borderColor: 'blue',
+    // borderWidth: 2,
   },
   item: {
     backgroundColor: '#c5d1fc',
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 15,
 
-    borderColor: 'red',
-    borderWidth: 10,
+    // borderColor: 'red',
+    // borderWidth: 10,
   },
   names: {
     fontSize: 20,
