@@ -1,36 +1,33 @@
-import { StyleSheet, SafeAreaView, SectionList, Pressable } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
-import useColorScheme from '../hooks/useColorScheme';
+import { StyleSheet, SafeAreaView, SectionList, Pressable } from "react-native";
+import { Text, View } from "../components/Themed";
+import { RootTabScreenProps } from "../types";
+import useColorScheme from "../hooks/useColorScheme";
 
-export default function UserEditScreen({
-  route,
-}: RootTabScreenProps<'Users'>) {
+export default function UserEditScreen({ route }: RootTabScreenProps<"Users">) {
   const colorScheme = useColorScheme();
 
   const fakeData: any = [
     {
-      data: [ route.params === 1
-        ?
-        {
-          _id: 1,
-          firstname: 'Bobby',
-          lastname: 'Billy',
-          email: 'bobi@email.com',
-          hash: 'myhashbob',
-          role: 'user',
-          position: 'Developer',
-        }
-        :
-        {
-          _id: 2,
-          firstname: 'Jane',
-          lastname: 'Fixme',
-          email: 'jfix@email.com',
-          hash: 'myhashfix',
-          role: 'user',
-          position: 'Developer',
-        }
+      data: [
+        route.params === 1
+          ? {
+              _id: 1,
+              firstname: "Bobby",
+              lastname: "Billy",
+              email: "bobi@email.com",
+              hash: "myhashbob",
+              role: "user",
+              position: "Developer",
+            }
+          : {
+              _id: 2,
+              firstname: "Jane",
+              lastname: "Fixme",
+              email: "jfix@email.com",
+              hash: "myhashfix",
+              role: "user",
+              position: "Developer",
+            },
       ],
     },
   ];
@@ -65,34 +62,34 @@ export default function UserEditScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'blue',
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "blue",
     borderWidth: 2,
   },
   item: {
-    backgroundColor: '#c5d1fc',
+    backgroundColor: "#c5d1fc",
     padding: 20,
     marginVertical: 8,
     borderRadius: 15,
 
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 10,
   },
   names: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   position: {
     fontSize: 20,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });

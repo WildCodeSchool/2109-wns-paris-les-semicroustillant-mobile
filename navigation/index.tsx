@@ -31,6 +31,9 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
+import { Image, StyleSheet } from "react-native";
+import biscotteLogo from "../assets/logo/biscotteLogo.png";
+
 export default function Navigation({
   colorScheme,
 }: {
@@ -115,6 +118,16 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="folder-open" color={color} />
           ),
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image source={biscotteLogo} style={styles.logo} />
+            </Pressable>
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Settings")}
@@ -138,6 +151,16 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<"Tasks">) => ({
           title: "Tasks",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image source={biscotteLogo} style={styles.logo} />
+            </Pressable>
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Settings")}
@@ -161,6 +184,16 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<"Users">) => ({
           title: "Users",
           tabBarIcon: ({ color }) => <TabBarIcon name="users" color={color} />,
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image source={biscotteLogo} style={styles.logo} />
+            </Pressable>
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Settings")}
@@ -191,3 +224,11 @@ function TabBarIcon(props: {
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    marginTop: 15,
+    width: 160,
+    height: 160,
+  },
+});
