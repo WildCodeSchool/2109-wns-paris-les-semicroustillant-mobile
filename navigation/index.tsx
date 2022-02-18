@@ -91,17 +91,19 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Users" // @FREDY: to change to Projects
+      initialRouteName="Projects"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        name="Projects"
+        component={TabTwoScreen}
+        options={({ navigation }: RootTabScreenProps<"Projects">) => ({
+          title: "Projects",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="folder-open" color={color} />
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Settings')}
@@ -120,28 +122,27 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Projects"
-        component={ProjectScreen}
-        options={{
-          title: 'Projects',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
         name="Tasks"
         component={TabTwoScreen}
-        options={{
-          title: 'Tasks',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+        options={({ navigation }: RootTabScreenProps<"Tasks">) => ({
+          title: "Tasks",
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate("Settings")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <FontAwesome
+                name="gear"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
       <BottomTab.Screen
         name="Users"
