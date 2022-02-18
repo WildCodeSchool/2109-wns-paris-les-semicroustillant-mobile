@@ -1,9 +1,7 @@
 import { StyleSheet, SafeAreaView, SectionList, Pressable } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { FontAwesome, Feather } from '@expo/vector-icons';
 import { RootTabScreenProps } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
 
 export default function UserEditScreen({
   route,
