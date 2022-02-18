@@ -47,6 +47,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
         },
       },
+
       Settings: "Settings",
       UserEdit: "UserEdit",
       NotFound: "*",
