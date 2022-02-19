@@ -1,32 +1,24 @@
 import { StyleSheet } from "react-native";
+import { View } from "../components/Themed";
 
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
-export default function TabOneScreen({
+import FiltersTasks from "../components/FiltersTasks";
+export default function TasksScreen({
   navigation,
-}: RootTabScreenProps<"TabOne">) {
+}: RootTabScreenProps<"Tasks">) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Task</Text>
+      <FiltersTasks />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 30,
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+    justifyContent: "flex-start",
   },
 });
