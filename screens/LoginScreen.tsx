@@ -1,4 +1,5 @@
 import { StyleSheet, Image } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import { View } from '../components/Themed'
 import { TextInput, Text, Pressable } from 'react-native'
@@ -11,7 +12,7 @@ export default function TabOneScreen({
 }: RootTabScreenProps<'Login'>) {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-	console.log(username, password)
+	const [passwordVisible, setPasswordVisible] = useState(false)
 
 	const onLogin = () => {
 		navigation.navigate('Projects')
@@ -20,21 +21,44 @@ export default function TabOneScreen({
 	return (
 		<View style={styles.container}>
 			<Image style={styles.image} source={Logo} />
+			<Text style={styles.title}>Login</Text>
 			<TextInput
 				placeholder='Username'
 				value={username}
 				onChangeText={setUsername}
 				style={styles.input}
+				textContentType='username'
 			/>
-			<TextInput
-				placeholder='Password'
-				value={password}
-				onChangeText={setPassword}
-				style={styles.input}
-			/>
-			<Pressable style={styles.button} onPress={onLogin}>
-				<Text style={styles.buttonText}>Log In</Text>
-			</Pressable>
+			<View style={styles.passwordInput}>
+				<TextInput
+					placeholder='Password'
+					value={password}
+					onChangeText={setPassword}
+					textContentType='password'
+					secureTextEntry={!passwordVisible && true}
+					style={styles.inputText}
+				/>
+				{passwordVisible ? (
+					<FontAwesome
+						onPress={() => setPasswordVisible(!passwordVisible)}
+						name='eye-slash'
+						size={25}
+						style={styles.icon}
+					/>
+				) : (
+					<FontAwesome
+						onPress={() => setPasswordVisible(!passwordVisible)}
+						name='eye'
+						size={25}
+						style={styles.icon}
+					/>
+				)}
+			</View>
+			<View style={styles.container}>
+				<Pressable style={styles.button} onPress={onLogin}>
+					<Text style={styles.buttonText}>Log In</Text>
+				</Pressable>
+			</View>
 		</View>
 	)
 }
@@ -42,25 +66,54 @@ export default function TabOneScreen({
 const styles = StyleSheet.create({
 	button: {
 		backgroundColor: '#F50D51',
+		width: 250,
+		flex: 0.25,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 5,
+		marginTop: 50,
 	},
-	buttonText: { color: 'white' },
+	buttonText: {
+		color: 'white',
+	},
 	container: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	icon: {
+		color: 'grey',
+		justifyContent: 'flex-end',
+		fontSize: 20,
+		position: 'absolute',
+		left: 220,
+		top: 10,
+	},
 	image: {
 		flex: 1,
 		resizeMode: 'contain',
 		width: '80%',
+		marginBottom: 0,
 	},
 	input: {
 		borderWidth: 0.5,
 		borderRadius: 5,
 		height: 40,
-		width: 200,
+		width: 250,
 		padding: 10,
-		marginBottom: 8,
+		marginBottom: 20,
+	},
+	inputText: {
+		width: '70%',
+	},
+	passwordInput: {
+		flexDirection: 'row',
+		borderWidth: 0.5,
+		borderRadius: 5,
+		height: 40,
+		width: 250,
+		padding: 10,
+		marginBottom: 20,
 	},
 	title: {
 		fontSize: 25,
