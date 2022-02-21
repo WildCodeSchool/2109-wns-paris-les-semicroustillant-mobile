@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 import { View } from '../components/Themed'
-import { TextInput, Button } from 'react-native'
+import { TextInput, Button, Text, Pressable } from 'react-native'
 import { RootTabScreenProps } from '../types'
 import { useState } from 'react'
 
@@ -18,6 +18,7 @@ export default function TabOneScreen({
 
 	return (
 		<View style={styles.container}>
+			<Text style={styles.title}>Login</Text>
 			<TextInput
 				placeholder='Username'
 				value={username}
@@ -30,12 +31,18 @@ export default function TabOneScreen({
 				onChangeText={setPassword}
 				style={styles.input}
 			/>
-			<Button title='Login' onPress={onLogin} />
+			<Pressable style={styles.button} onPress={onLogin}>
+				<Text style={styles.buttonText}>Log In</Text>
+			</Pressable>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
+	button: {
+		backgroundColor: '#F50D51',
+	},
+	buttonText: { color: 'white' },
 	container: {
 		flex: 1,
 		alignItems: 'center',
@@ -48,5 +55,10 @@ const styles = StyleSheet.create({
 		width: 200,
 		padding: 10,
 		marginBottom: 8,
+	},
+	title: {
+		fontSize: 25,
+		fontWeight: 'bold',
+		marginBottom: 40,
 	},
 })
