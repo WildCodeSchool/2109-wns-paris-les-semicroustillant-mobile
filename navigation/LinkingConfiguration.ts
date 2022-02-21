@@ -50,6 +50,7 @@ const linking: LinkingOptions<RootStackParamList> = {
 
 			Settings: 'Settings',
 			UserEdit: 'UserEdit',
+			ProjectDetails: 'ProjectDetails',
 			NotFound: '*',
 		},
 	},

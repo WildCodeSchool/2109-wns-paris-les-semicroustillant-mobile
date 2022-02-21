@@ -4,9 +4,12 @@ import { Text, View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
 import { Card } from 'react-native-elements'
 
-export default function Projects({}: RootTabScreenProps<'TabOne'>) {
+export default function Projects({
+	navigation,
+}: RootTabScreenProps<'Projects'>) {
 	const fakeData = [
 		{
+			_id: '1',
 			name: 'Project 1',
 			description:
 				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
@@ -14,6 +17,7 @@ export default function Projects({}: RootTabScreenProps<'TabOne'>) {
 			advancement: 50,
 		},
 		{
+			_id: '2',
 			name: 'Project 2',
 			description:
 				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
@@ -21,6 +25,7 @@ export default function Projects({}: RootTabScreenProps<'TabOne'>) {
 			advancement: 100,
 		},
 		{
+			_id: '3',
 			name: 'Project 3',
 			description:
 				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
@@ -30,19 +35,25 @@ export default function Projects({}: RootTabScreenProps<'TabOne'>) {
 	]
 
 	interface Idata {
+		_id: string
 		name: string
 		description: string
 		status: string
 		advancement: number
 	}
 
-	const Item = ({ name, description, status, advancement }: Idata) => {
+	const Item = ({ _id, name, description, status, advancement }: Idata) => {
 		return (
 			<View style={styles.container}>
 				<Card containerStyle={styles.card}>
 					<View style={styles.cardHeader}>
 						<Text style={styles.title}>{name}</Text>
-						<Pressable style={styles.button} onPress={onPressProject}>
+						<Pressable
+							style={styles.button}
+							onPress={() =>
+								navigation.navigate('ProjectDetails', { projectId: _id })
+							}
+						>
 							<Text style={styles.buttonText}>See More</Text>
 						</Pressable>
 					</View>
@@ -64,6 +75,7 @@ export default function Projects({}: RootTabScreenProps<'TabOne'>) {
 	const renderItem: ListRenderItem<Idata> = ({ item }) => {
 		return (
 			<Item
+				_id={item._id}
 				name={item.name}
 				description={item.description}
 				status={item.status}
@@ -72,15 +84,12 @@ export default function Projects({}: RootTabScreenProps<'TabOne'>) {
 		)
 	}
 
-	const onPressProject = () => {
-		alert('Hi')
-	}
 	return (
 		<View style={styles.screen}>
 			<FlatList
 				data={fakeData}
 				renderItem={renderItem}
-				keyExtractor={(fakedata) => fakedata.name}
+				keyExtractor={(fakedata) => fakedata._id}
 			/>
 		</View>
 	)

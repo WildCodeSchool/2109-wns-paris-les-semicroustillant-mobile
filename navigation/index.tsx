@@ -23,6 +23,7 @@ import UserScreen from '../screens/UserScreen'
 import UserEditScreen from '../screens/UserEditScreen'
 import ProjectsScreen from '../screens/ProjectsScreen'
 import TasksScreen from '../screens/TasksScreen'
+import ProjectDetails from '../screens/ProjectDetails'
 import {
 	RootStackParamList,
 	RootTabParamList,
@@ -76,6 +77,15 @@ function RootNavigator() {
 					component={UserEditScreen}
 					options={{
 						title: 'Edit a user',
+					}}
+				/>
+			</Stack.Group>
+			<Stack.Group screenOptions={{ presentation: 'modal' }}>
+				<Stack.Screen
+					name='ProjectDetails'
+					component={ProjectDetails}
+					options={{
+						title: 'Project Details',
 					}}
 				/>
 			</Stack.Group>
