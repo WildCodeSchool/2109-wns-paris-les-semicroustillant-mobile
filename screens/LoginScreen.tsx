@@ -1,8 +1,7 @@
-import { StyleSheet, Image } from 'react-native'
+import { StyleSheet, Image, TextInput, Text, Pressable } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
 import { View } from '../components/Themed'
-import { TextInput, Text, Pressable } from 'react-native'
 import { RootTabScreenProps } from '../types'
 import { useState } from 'react'
 import Logo from '../assets/logo/biscotteLogo.png'

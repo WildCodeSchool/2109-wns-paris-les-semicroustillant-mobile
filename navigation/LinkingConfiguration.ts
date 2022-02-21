@@ -4,55 +4,55 @@
  * https://reactnavigation.org/docs/configuring-links
  */
 
-import { LinkingOptions } from "@react-navigation/native";
-import * as Linking from "expo-linking";
+import { LinkingOptions } from '@react-navigation/native'
+import * as Linking from 'expo-linking'
 
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from '../types'
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl("/")],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              TabOneScreen: "one",
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: "two",
-            },
-          },
-          Login: {
-            screens: {
-              LoginScreen: "Login",
-            },
-          },
-          Projects: {
-            screens: {
-              ProjectsScreen: "Project",
-            },
-          },
-          Tasks: {
-            screens: {
-              TasksScreen: "Task",
-            },
-          },
-          Users: {
-            screens: {
-              UserScreen: "Users",
-            },
-          },
-        },
-      },
+	prefixes: [Linking.makeUrl('/')],
+	config: {
+		screens: {
+			Root: {
+				screens: {
+					TabOne: {
+						screens: {
+							TabOneScreen: 'one',
+						},
+					},
+					TabTwo: {
+						screens: {
+							TabTwoScreen: 'two',
+						},
+					},
+					Login: {
+						screens: {
+							LoginScreen: 'Login',
+						},
+					},
+					Projects: {
+						screens: {
+							ProjectsScreen: 'Project',
+						},
+					},
+					Tasks: {
+						screens: {
+							TasksScreen: 'Task',
+						},
+					},
+					Users: {
+						screens: {
+							UserScreen: 'Users',
+						},
+					},
+				},
+			},
 
-      Settings: "Settings",
-      UserEdit: "UserEdit",
-      NotFound: "*",
-    },
-  },
-};
+			Settings: 'Settings',
+			UserEdit: 'UserEdit',
+			NotFound: '*',
+		},
+	},
+}
 
-export default linking;
+export default linking
