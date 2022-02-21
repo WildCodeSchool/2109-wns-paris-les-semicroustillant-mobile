@@ -47,9 +47,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	image: {
-    flex: 1,
-    resizeMode: 'contain',
-    width: '80%',
+    width: '90%',
+		height: '40%',
 	},
 	input: {
 		borderWidth: 0.5,

@@ -33,7 +33,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 
 import { Image, StyleSheet } from "react-native";
-import biscotteLogo from "../assets/logo/biscotteLogo.png";
+import biscotteLogo from "../assets/logo/biscotteLogo-header.png";
 
 export default function Navigation({
   colorScheme,
@@ -228,8 +228,9 @@ function TabBarIcon(props: {
 
 const styles = StyleSheet.create({
   logo: {
-    marginTop: 15,
-    width: 160,
-    height: 160,
+    marginTop: -8,
+    marginLeft: 10,
+    width: 130,
+    height: 50,
   },
 });
