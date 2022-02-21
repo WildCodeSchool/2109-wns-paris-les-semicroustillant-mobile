@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 
 import { View } from '../components/Themed'
-import { TextInput, Button, Text, Pressable } from 'react-native'
+import { TextInput, Text, Pressable } from 'react-native'
 import { RootTabScreenProps } from '../types'
 import { useState } from 'react'
+import Logo from '../assets/logo/biscotteLogo.png'
 
 export default function TabOneScreen({
 	navigation,
@@ -18,7 +19,7 @@ export default function TabOneScreen({
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Login</Text>
+			<Image style={styles.image} source={Logo} />
 			<TextInput
 				placeholder='Username'
 				value={username}
@@ -47,6 +48,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+	},
+	image: {
+		flex: 1,
+		resizeMode: 'contain',
+		width: '80%',
 	},
 	input: {
 		borderWidth: 0.5,
