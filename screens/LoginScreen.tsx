@@ -11,7 +11,6 @@ export default function TabOneScreen({
 }: RootTabScreenProps<'Login'>) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  console.log(username, password);
 
   const onLogin = () => {
     navigation.navigate('Projects');

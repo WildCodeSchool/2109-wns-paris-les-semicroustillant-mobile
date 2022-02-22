@@ -29,7 +29,7 @@ const UserItem = ({
             <Text style={styles.position}>{position}</Text>
           </View>
           <Pressable
-            onPress={() => navigation?.navigate('UserEdit', { _id })}
+            onPress={() => navigation?.navigate('UserEdit', _id)}
             style={({ pressed }) => ({
               opacity: pressed ? 0.5 : 1,
             })}

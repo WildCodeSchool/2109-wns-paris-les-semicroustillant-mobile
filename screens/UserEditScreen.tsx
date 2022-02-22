@@ -1,11 +1,8 @@
 import { StyleSheet, SafeAreaView, SectionList, Pressable } from "react-native";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import useColorScheme from "../hooks/useColorScheme";
 
 export default function UserEditScreen({ route }: RootTabScreenProps<"Users">) {
-  const colorScheme = useColorScheme();
-
   const fakeData: any = [
     {
       data: [

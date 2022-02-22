@@ -9,7 +9,7 @@ import { Card, SearchBar } from 'react-native-elements';
 import { RootTabScreenProps, IUserItem } from '../types';
 import UserItemComponent from '../components/UserItemComponent';
 
-const fakeData: any = [
+const fakeData: IUserItem[] = [
   {
     _id: '1',
     firstname: 'Bobby',
@@ -91,7 +91,7 @@ export default function UserScreen({
         <FlatList
           style={{ height: '100%' }}
           data={fakeData}
-          keyExtractor={(item: any) => item._id}
+          keyExtractor={(item) => item._id}
           renderItem={renderItem}
         />
       </Card>
