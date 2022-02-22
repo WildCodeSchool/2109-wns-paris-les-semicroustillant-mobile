@@ -2,6 +2,8 @@ import { RootTabScreenProps } from '../types'
 import { Text, View } from '../components/Themed'
 import { StyleSheet, ListRenderItem, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
+import UserItem from '../components/UserItemComponent'
+import { fakeData as users } from './UserScreen'
 
 export default function ProjectDetails({
 	route,
@@ -85,6 +87,15 @@ export default function ProjectDetails({
 				</View>
 				<View style={styles.usersContainer}>
 					<Text style={styles.sectionsTitle}>Users</Text>
+					{users.map((user) => (
+						<UserItem
+							key={user._id}
+							_id={user._id}
+							firstname={user.firstname}
+							lastname={user.lastname}
+							position={user.position}
+						/>
+					))}
 				</View>
 			</ScrollView>
 		</View>

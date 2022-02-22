@@ -9,7 +9,7 @@ import { Card, SearchBar } from 'react-native-elements'
 import { RootTabScreenProps, IUserItem } from '../types'
 import UserItemComponent from '../components/UserItemComponent'
 
-const fakeData: IUserItem[] = [
+export const fakeData: IUserItem[] = [
 	{
 		_id: '1',
 		firstname: 'Bobby',
