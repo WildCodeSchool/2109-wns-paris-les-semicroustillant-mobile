@@ -3,7 +3,7 @@ import { StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 import AvatarComponent from './AvatarComponent';
-import { IUserItem } from '../screens/UserScreen';
+import { IUserItem } from '../types';
 
 const UserItem = ({
   _id,

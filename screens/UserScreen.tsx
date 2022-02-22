@@ -6,22 +6,8 @@ import {
   ListRenderItem,
 } from 'react-native';
 import { Card, SearchBar } from 'react-native-elements';
-import { RootTabScreenProps } from '../types';
+import { RootTabScreenProps, IUserItem } from '../types';
 import UserItemComponent from '../components/UserItemComponent';
-
-export interface IUser {
-  _id: string;
-  firstname: string;
-  lastname: string;
-  email?: string;
-  hash?: string;
-  role?: string;
-  position: string;
-}
-
-export interface IUserItem extends IUser {
-  navigation?: {};
-}
 
 const fakeData: any = [
   {
