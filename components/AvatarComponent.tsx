@@ -1,0 +1,39 @@
+import React from 'react';
+import { Avatar } from 'react-native-elements';
+
+type AvatarData = {
+  position: string;
+  lastname: string;
+  firstname: string;
+  size: number;
+};
+
+const AvatarComponent = ({ position, lastname, firstname, size }: AvatarData) => {
+  const split = lastname.split(' ');
+  const initials = (firstname.charAt(0)+lastname.split(' ')[split.length -1].charAt(0)).toUpperCase();
+
+  console.log(position, lastname, firstname )
+  
+  const avatarColor = (position: string) => {
+    if (position === 'Developer') {
+      return 'orange';
+    }
+    if (position === 'Product Owner') {
+      return '#3d4db7';
+    }
+  };
+
+  return (
+    <Avatar
+      size={size}
+      rounded
+      title={initials}
+      containerStyle={{
+        backgroundColor: avatarColor(position),
+        marginRight: 20,
+      }}
+    />
+  );
+};
+
+export default AvatarComponent;
