@@ -4,6 +4,7 @@ import { StyleSheet, ListRenderItem, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 import UserItem from '../components/UserItemComponent'
 import { fakeData as users } from './UserScreen'
+import AvatarComponent from '../components/AvatarComponent'
 
 export default function ProjectDetails({
 	route,
@@ -38,26 +39,79 @@ export default function ProjectDetails({
 	}
 	const getData = fakeData()
 
+	interface Users {
+		_id: string
+		firstname: string
+		lastname: string
+		position: string
+	}
 	interface Idata {
 		_id: string
 		subject: string
+		users: Users[] | any
 	}
 	const tasks = [
-		{ _id: '1', subject: 'Task one' },
-		{ _id: '2', subject: 'Task two' },
-		{ _id: '3', subject: 'Task three' },
+		{
+			_id: '1',
+			subject: 'Task one',
+			users: [
+				{ _id: '1', firstname: 'Jane', lastname: 'Doe', position: 'Developer' },
+				{
+					_id: '2',
+					firstname: 'Tom',
+					lastname: 'Jones',
+					position: 'Product Owner',
+				},
+			],
+		},
+		{
+			_id: '2',
+			subject: 'Task two',
+			users: [
+				{ _id: '1', firstname: 'Jane', lastname: 'Doe', position: 'Developer' },
+				{
+					_id: '2',
+					firstname: 'Tom',
+					lastname: 'Jones',
+					position: 'Product Owner',
+				},
+			],
+		},
+		{
+			_id: '3',
+			subject: 'Task three',
+			users: [
+				{ _id: '1', firstname: 'Jane', lastname: 'Doe', position: 'Developer' },
+				{
+					_id: '2',
+					firstname: 'Tom',
+					lastname: 'Jones',
+					position: 'Product Owner',
+				},
+			],
+		},
 	]
 
-	const Item = ({ subject }: Idata) => {
+	const Item = ({ subject, users }: Idata) => {
+		console.log(users)
 		return (
 			<Card containerStyle={styles.taskCard}>
-				<Text>{subject}</Text>
+				<View style={styles.tasks}>
+					<Text style={styles.taskSubject}>{subject}</Text>
+					<View style={styles.taskUsers}>
+						{users.map((user: Users) => (
+							<AvatarComponent
+								key={user._id}
+								firstname={user.firstname}
+								lastname={user.lastname}
+								position={user.position}
+								avatarSize={34}
+							/>
+						))}
+					</View>
+				</View>
 			</Card>
 		)
-	}
-
-	const renderItem: ListRenderItem<Idata> = ({ item }) => {
-		return <Item _id={item._id} subject={item.subject} />
 	}
 
 	return (
@@ -82,19 +136,27 @@ export default function ProjectDetails({
 				<View style={styles.tasksContainer}>
 					<Text style={styles.sectionsTitle}>Tasks</Text>
 					{tasks.map((task) => (
-						<Item key={task._id} _id={task._id} subject={task.subject} />
+						<Item
+							key={task._id}
+							_id={task._id}
+							subject={task.subject}
+							users={task.users}
+						/>
 					))}
 				</View>
 				<View style={styles.usersContainer}>
 					<Text style={styles.sectionsTitle}>Users</Text>
 					{users.map((user) => (
-						<UserItem
-							key={user._id}
-							_id={user._id}
-							firstname={user.firstname}
-							lastname={user.lastname}
-							position={user.position}
-						/>
+						<>
+							<UserItem
+								key={user._id}
+								_id={user._id}
+								firstname={user.firstname}
+								lastname={user.lastname}
+								position={user.position}
+								avatarSize={34}
+							/>
+						</>
 					))}
 				</View>
 			</ScrollView>
@@ -124,18 +186,30 @@ const styles = StyleSheet.create({
 	},
 	projectCard: {
 		flex: 1,
+		width: '100%',
 	},
 	redText: {
 		color: '#F50D51',
 	},
+	tasks: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	taskCard: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: 250,
-		height: 45,
+		height: 80,
+		width: '90%',
 	},
 	tasksContainer: {
 		alignItems: 'center',
+	},
+	taskSubject: {
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: 15,
+		marginRight: 20,
 	},
 	scrollContainer: {
 		marginHorizontal: 10,
@@ -154,7 +228,11 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		marginTop: 20,
 	},
+	taskUsers: {
+		flexDirection: 'row',
+	},
 	usersContainer: {
 		alignItems: 'center',
+		justifyContent: 'center',
 	},
 })

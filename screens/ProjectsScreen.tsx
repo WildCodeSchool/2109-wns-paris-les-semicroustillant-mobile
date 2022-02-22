@@ -48,6 +48,7 @@ export default function Projects({
 		name: string
 		projectOwner: string
 		members?: string[]
+		GetAllProjects: () => void
 	}
 
 	const GET_PROJECTS = gql`
@@ -65,7 +66,7 @@ export default function Projects({
 
 	const { loading, data } = useQuery<IQuery>(GET_PROJECTS)
 
-	console.log(data)
+	console.log(data?.GetAllProjects)
 
 	const Item = ({ _id, name, description, status, advancement }: Idata) => {
 		return (
