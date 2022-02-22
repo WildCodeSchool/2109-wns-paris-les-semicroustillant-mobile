@@ -56,5 +56,6 @@ export interface IUser {
 
 export interface IUserItem extends IUser {
 	// navigation?: RootTabScreenProps<'Users'>;
+	avatarSize?: number
 	navigation?: {}
 }

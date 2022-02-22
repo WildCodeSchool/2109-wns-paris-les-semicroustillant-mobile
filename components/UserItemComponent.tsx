@@ -10,13 +10,14 @@ const UserItem = ({
   firstname,
   lastname,
   position,
+  avatarSize,
   navigation,
 }: IUserItem) => {
   return (
     <>
       <View style={styles.userItem}>
         <AvatarComponent
-          size={64}
+          avatarSize={avatarSize}
           position={position}
           lastname={lastname}
           firstname={firstname}
