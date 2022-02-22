@@ -11,8 +11,6 @@ type AvatarData = {
 const AvatarComponent = ({ position, lastname, firstname, size }: AvatarData) => {
   const split = lastname.split(' ');
   const initials = (firstname.charAt(0)+lastname.split(' ')[split.length -1].charAt(0)).toUpperCase();
-
-  console.log(position, lastname, firstname )
   
   const avatarColor = (position: string) => {
     if (position === 'Developer') {

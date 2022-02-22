@@ -43,3 +43,18 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 		BottomTabScreenProps<RootTabParamList, Screen>,
 		NativeStackScreenProps<RootStackParamList>
 	>
+
+export interface IUser {
+	_id: string
+	firstname: string
+	lastname: string
+	email?: string
+	hash?: string
+	role?: string
+	position: string
+}
+
+export interface IUserItem extends IUser {
+	// navigation?: RootTabScreenProps<'Users'>;
+	navigation?: {}
+}
