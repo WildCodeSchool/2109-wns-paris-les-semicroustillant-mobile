@@ -1,4 +1,5 @@
 import { StyleSheet, Pressable, FlatList, ListRenderItem } from 'react-native'
+import { useQuery, gql } from '@apollo/client'
 
 import { Text, View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
@@ -41,6 +42,30 @@ export default function Projects({
 		status: string
 		advancement: number
 	}
+
+	interface IQuery {
+		_id: string
+		name: string
+		projectOwner: string
+		members?: string[]
+	}
+
+	const GET_PROJECTS = gql`
+		query GetAllProjects {
+			getAllProjects {
+				_id
+				name
+				projectOwner
+				members {
+					_id
+				}
+			}
+		}
+	`
+
+	const { loading, data } = useQuery<IQuery>(GET_PROJECTS)
+
+	console.log(data)
 
 	const Item = ({ _id, name, description, status, advancement }: Idata) => {
 		return (
