@@ -1,6 +1,6 @@
 import { RootTabScreenProps } from '../types'
 import { Text, View } from '../components/Themed'
-import { StyleSheet, Pressable, FlatList, ListRenderItem } from 'react-native'
+import { StyleSheet, ListRenderItem, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 
 export default function ProjectDetails({
@@ -60,33 +60,33 @@ export default function ProjectDetails({
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.mainTitle}>{getData.name}</Text>
-			<View style={styles.projectCard}>
-				<Card>
-					<Text style={styles.description}>{getData.description}</Text>
-					<View style={styles.bottomContainer}>
-						<View style={styles.bottom}>
-							<Text style={styles.redText}>Status: </Text>
-							<Text>{getData.status}</Text>
+			<ScrollView style={styles.scrollContainer}>
+				<Text style={styles.mainTitle}>{getData.name}</Text>
+				<View style={styles.projectCard}>
+					<Card>
+						<Text style={styles.description}>{getData.description}</Text>
+						<View style={styles.bottomContainer}>
+							<View style={styles.bottom}>
+								<Text style={styles.redText}>Status: </Text>
+								<Text>{getData.status}</Text>
+							</View>
+							<View style={styles.bottom}>
+								<Text style={styles.redText}>Advancement: </Text>
+								<Text>{getData.advancement}%</Text>
+							</View>
 						</View>
-						<View style={styles.bottom}>
-							<Text style={styles.redText}>Advancement: </Text>
-							<Text>{getData.advancement}%</Text>
-						</View>
-					</View>
-				</Card>
-			</View>
-			<View style={styles.tasksContainer}>
-				<Text style={styles.sectionsTitle}>Tasks</Text>
-				<FlatList
-					data={tasks}
-					renderItem={renderItem}
-					keyExtractor={(tasks) => tasks._id}
-				/>
-			</View>
-			<View style={styles.usersContainer}>
-				<Text style={styles.sectionsTitle}>Users</Text>
-			</View>
+					</Card>
+				</View>
+				<View style={styles.tasksContainer}>
+					<Text style={styles.sectionsTitle}>Tasks</Text>
+					{tasks.map((task) => (
+						<Item key={task._id} _id={task._id} subject={task.subject} />
+					))}
+				</View>
+				<View style={styles.usersContainer}>
+					<Text style={styles.sectionsTitle}>Users</Text>
+				</View>
+			</ScrollView>
 		</View>
 	)
 }
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	projectCard: {
-		// width: '80%',
 		flex: 1,
 	},
 	redText: {
@@ -125,7 +124,10 @@ const styles = StyleSheet.create({
 		height: 45,
 	},
 	tasksContainer: {
-		flex: 1,
+		alignItems: 'center',
+	},
+	scrollContainer: {
+		marginHorizontal: 10,
 	},
 	sectionsTitle: {
 		textAlign: 'center',
@@ -142,6 +144,6 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	usersContainer: {
-		flex: 1,
+		alignItems: 'center',
 	},
 })
