@@ -5,10 +5,10 @@ type AvatarData = {
   position: string;
   lastname: string;
   firstname: string;
-  size: number;
+  avatarSize: number;
 };
 
-const AvatarComponent = ({ position, lastname, firstname, size }: AvatarData) => {
+const AvatarComponent = ({ position, lastname, firstname, avatarSize }: AvatarData) => {
   const split = lastname.split(' ');
   const initials = (firstname.charAt(0)+lastname.split(' ')[split.length -1].charAt(0)).toUpperCase();
   
@@ -23,7 +23,7 @@ const AvatarComponent = ({ position, lastname, firstname, size }: AvatarData) =>
 
   return (
     <Avatar
-      size={size}
+      size={avatarSize}
       rounded
       title={initials}
       containerStyle={{

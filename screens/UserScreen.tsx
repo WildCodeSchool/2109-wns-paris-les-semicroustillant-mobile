@@ -9,6 +9,20 @@ import { Card, SearchBar } from 'react-native-elements';
 import { RootTabScreenProps, IUserItem } from '../types';
 import UserItemComponent from '../components/UserItemComponent';
 
+import { gql, useQuery } from '@apollo/client'
+
+// const USERS_QUERY = gql`
+//   query GetAllUsers {
+//   allUsers {
+//     _id
+//     firstname
+//     lastname
+//     position
+//     email
+//   }
+// }
+// `
+
 const fakeData: IUserItem[] = [
   {
     _id: '1',
@@ -65,6 +79,10 @@ export default function UserScreen({
     setSearch(search);
   };
 
+  // const { data } = useQuery(USERS_QUERY);
+
+  // console.log('DATA', data);
+
   const renderItem: ListRenderItem<IUserItem> = ({ item }) => {
     return (
       <UserItemComponent
@@ -72,6 +90,7 @@ export default function UserScreen({
         firstname={item.firstname}
         lastname={item.lastname}
         position={item.position}
+        avatarSize={64}
         navigation={navigation}
       />
     );

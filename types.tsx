@@ -54,5 +54,6 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
   export interface IUserItem extends IUser {
     // navigation?: RootTabScreenProps<'Users'>;
+    avatarSize?: number,
     navigation?: {};
   }
