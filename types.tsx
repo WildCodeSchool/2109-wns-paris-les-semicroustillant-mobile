@@ -3,12 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
-} from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+} from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
@@ -42,18 +42,20 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
-  export interface IUser {
-    _id: string;
-    firstname: string;
-    lastname: string;
-    email?: string;
-    hash?: string;
-    role?: string;
-    position: string;
-  }
+export interface IUser {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email?: string;
+  hash?: string;
+  role?: string;
+  position: string;
+}
 
-  export interface IUserItem extends IUser {
-    // navigation?: RootTabScreenProps<'Users'>;
-    avatarSize?: number,
-    navigation?: {};
-  }
+export interface IUserWithAvatar extends IUser {
+  avatarSize?: number;
+}
+
+export interface IUserWithAvatarAndNavigation extends IUserWithAvatar {
+  navigation?: { navigate: (name: string, params: { _id: string }) => void };
+}

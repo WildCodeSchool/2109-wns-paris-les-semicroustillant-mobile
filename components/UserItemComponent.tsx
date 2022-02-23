@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
+import { Divider } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from '../components/Themed';
 import AvatarComponent from './AvatarComponent';
-import { IUserItem } from '../types';
+import { IUserWithAvatarAndNavigation } from '../types';
 
 const UserItem = ({
   _id,
@@ -12,7 +13,7 @@ const UserItem = ({
   position,
   avatarSize,
   navigation,
-}: IUserItem) => {
+}: IUserWithAvatarAndNavigation) => {
   return (
     <>
       <View style={styles.userItem}>
@@ -44,11 +45,7 @@ const UserItem = ({
           </Pressable>
         </View>
       </View>
-      <View
-        style={styles.separator}
-        lightColor="lightgrey"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <Divider />
     </>
   );
 };
@@ -57,6 +54,8 @@ const styles = StyleSheet.create({
   userItem: {
     paddingTop: 20,
     paddingBottom: 20,
+    paddingRight: 10,
+    paddingLeft: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -79,11 +78,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     color: 'grey',
-  },
-  separator: {
-    height: 1,
-    width: '97%',
-    alignSelf: 'center',
   },
 });
 
