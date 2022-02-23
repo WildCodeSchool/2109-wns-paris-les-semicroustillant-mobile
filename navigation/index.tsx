@@ -77,7 +77,7 @@ function RootNavigator() {
           name="UserEdit"
           component={UserEditScreen}
           options={{
-            title: "Edit a user",
+            title: "Details",
           }}
         />
       </Stack.Group>

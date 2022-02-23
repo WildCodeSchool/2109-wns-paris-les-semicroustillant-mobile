@@ -1,57 +1,50 @@
-import { StyleSheet, SafeAreaView, SectionList, Pressable } from "react-native";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import {
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  ListRenderItem,
+} from 'react-native';
+import { Card } from 'react-native-elements';
+import { gql, useQuery } from '@apollo/client';
+import { Text, View } from '../components/Themed';
+import UserItemComponent from '../components/UserItemComponent';
+import { RootTabScreenProps, IUser } from '../types';
 
-export default function UserEditScreen({ route }: RootTabScreenProps<"Users">) {
-  const fakeData: any = [
-    {
-      data: [
-        route.params === '1'
-          ? {
-              _id: '1',
-              firstname: "Bobby",
-              lastname: "Billy",
-              email: "bobi@email.com",
-              hash: "myhashbob",
-              role: "user",
-              position: "Developer",
-            }
-          : {
-              _id: '2',
-              firstname: "Jane",
-              lastname: "Fixme",
-              email: "jfix@email.com",
-              hash: "myhashfix",
-              role: "user",
-              position: "Developer",
-            },
-      ],
-    },
-  ];
+const ONE_USER_QUERY = gql`
+  query getOneUser($userId: String!) {
+    getOneUser(userId: $userId) {
+      _id
+      firstname
+      lastname
+      email
+      position
+    }
+  }
+`;
 
-  const UserItem = (user: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.names}>{user.item.firstname}</Text>
-        <Text style={styles.names}>{user.item.lastname}</Text>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <Text style={styles.position}>{user.item.email}</Text>
-        <Text style={styles.position}>{user.item.position}</Text>
-      </View>
-    );
-  };
+export default function UserEditScreen({ route }: RootTabScreenProps<'Users'>) {
+  const { data } = useQuery<{ getOneUser: IUser }>(ONE_USER_QUERY, {
+    variables: { userId: route.params?.['_id'] },
+  });
+  const user = data && data.getOneUser;
 
   return (
     <SafeAreaView style={styles.container}>
-      <SectionList
-        sections={fakeData}
-        keyExtractor={(item: any) => item._id}
-        renderItem={({ item }: any) => <UserItem item={item} />}
-      />
+      <Card containerStyle={styles.card}>
+        {user && (
+          <View style={styles.item}>
+            <Text style={styles.names}>{user.firstname}</Text>
+            <Text style={styles.names}>{user.lastname}</Text>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            />
+            <Text style={styles.position}>{user.email}</Text>
+            <Text style={styles.position}>{user.position}</Text>
+          </View>
+        )}
+      </Card>
     </SafeAreaView>
   );
 }
@@ -59,34 +52,42 @@ export default function UserEditScreen({ route }: RootTabScreenProps<"Users">) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "blue",
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'blue',
     borderWidth: 2,
   },
+  card: {
+    width: '100%',
+    shadowOpacity: 0,
+    flex: 1,
+    marginTop: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   item: {
-    backgroundColor: "#c5d1fc",
+    backgroundColor: '#c5d1fc',
     padding: 20,
     marginVertical: 8,
     borderRadius: 15,
 
-    borderColor: "red",
+    borderColor: 'red',
     borderWidth: 10,
   },
   names: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   position: {
     fontSize: 20,
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "80%",
+    width: '80%',
   },
 });
