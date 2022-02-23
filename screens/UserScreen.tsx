@@ -10,53 +10,6 @@ import { gql, useQuery } from '@apollo/client'
 import UserItemComponent from '../components/UserItemComponent'
 import { RootTabScreenProps, IUserItem } from '../types'
 
-export const fakeData: IUserItem[] = [
-	{
-		_id: '1',
-		firstname: 'Bobby',
-		lastname: 'Billy',
-		email: 'bobi@email.com',
-		hash: 'myhashbob',
-		role: 'user',
-		position: 'Product Owner',
-	},
-	{
-		_id: '2',
-		firstname: 'Jane',
-		lastname: 'Fixme',
-		email: 'jfix@email.com',
-		hash: 'myhashfix',
-		role: 'user',
-		position: 'Developer',
-	},
-	{
-		_id: '3',
-		firstname: 'Joe',
-		lastname: '',
-		email: 'jdal@email.com',
-		hash: 'myhashfix',
-		role: 'user',
-		position: 'Product Owner',
-	},
-	{
-		_id: '4',
-		firstname: 'Pete',
-		lastname: 'Do De La Vega',
-		email: 'pd@email.com',
-		hash: 'myhashfix',
-		role: 'user',
-		position: 'Developer',
-	},
-	{
-		_id: '5',
-		firstname: 'Bubu',
-		lastname: 'de More',
-		email: 'bb@email.com',
-		hash: 'myhashfix',
-		role: 'user',
-		position: 'Product Owner',
-	},
-]
 const USERS_QUERY = gql`
 	query GetAllUsers {
 		allUsers {
