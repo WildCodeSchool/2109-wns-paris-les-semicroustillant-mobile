@@ -1,9 +1,8 @@
-import { RootTabScreenProps } from '../types'
+import { RootTabScreenProps, IUserItem } from '../types'
 import { Text, View } from '../components/Themed'
-import { StyleSheet, ListRenderItem, ScrollView } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements'
 import UserItem from '../components/UserItemComponent'
-import { fakeData as users } from './UserScreen'
 import AvatarComponent from '../components/AvatarComponent'
 
 export default function ProjectDetails({
@@ -38,6 +37,54 @@ export default function ProjectDetails({
 			  }
 	}
 	const getData = fakeData()
+
+	const users: IUserItem[] = [
+		{
+			_id: '1a',
+			firstname: 'Bobby',
+			lastname: 'Billy',
+			email: 'bobi@email.com',
+			hash: 'myhashbob',
+			role: 'user',
+			position: 'Product Owner',
+		},
+		{
+			_id: '2b',
+			firstname: 'Jane',
+			lastname: 'Fixme',
+			email: 'jfix@email.com',
+			hash: 'myhashfix',
+			role: 'user',
+			position: 'Developer',
+		},
+		{
+			_id: '3c',
+			firstname: 'Joe',
+			lastname: '',
+			email: 'jdal@email.com',
+			hash: 'myhashfix',
+			role: 'user',
+			position: 'Product Owner',
+		},
+		{
+			_id: '4d',
+			firstname: 'Pete',
+			lastname: 'Do De La Vega',
+			email: 'pd@email.com',
+			hash: 'myhashfix',
+			role: 'user',
+			position: 'Developer',
+		},
+		{
+			_id: '5e',
+			firstname: 'Bubu',
+			lastname: 'de More',
+			email: 'bb@email.com',
+			hash: 'myhashfix',
+			role: 'user',
+			position: 'Product Owner',
+		},
+	]
 
 	interface Users {
 		_id: string
@@ -93,7 +140,6 @@ export default function ProjectDetails({
 	]
 
 	const Item = ({ subject, users }: Idata) => {
-		console.log(users)
 		return (
 			<Card containerStyle={styles.taskCard}>
 				<View style={styles.tasks}>
@@ -147,16 +193,14 @@ export default function ProjectDetails({
 				<View style={styles.usersContainer}>
 					<Text style={styles.sectionsTitle}>Users</Text>
 					{users.map((user) => (
-						<>
-							<UserItem
-								key={user._id}
-								_id={user._id}
-								firstname={user.firstname}
-								lastname={user.lastname}
-								position={user.position}
-								avatarSize={34}
-							/>
-						</>
+						<UserItem
+							key={user._id}
+							_id={user._id}
+							firstname={user.firstname}
+							lastname={user.lastname}
+							position={user.position}
+							avatarSize={34}
+						/>
 					))}
 				</View>
 			</ScrollView>
