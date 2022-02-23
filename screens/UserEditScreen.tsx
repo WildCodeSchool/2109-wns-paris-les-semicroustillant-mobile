@@ -1,13 +1,10 @@
 import {
   StyleSheet,
   SafeAreaView,
-  FlatList,
-  ListRenderItem,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { gql, useQuery } from '@apollo/client';
 import { Text, View } from '../components/Themed';
-import UserItemComponent from '../components/UserItemComponent';
 import { RootTabScreenProps, IUser } from '../types';
 
 const ONE_USER_QUERY = gql`

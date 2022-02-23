@@ -30,20 +30,6 @@ export default function UserScreen({
     setSearch(search);
   };
 
-  console.log('DATA', data)
-  const renderItem = ({ item }: { item: IUserWithAvatarAndNavigation }) => {
-    return (
-      <UserItemComponent
-        _id={item._id}
-        firstname={item.firstname}
-        lastname={item.lastname}
-        position={item.position}
-        avatarSize={64}
-        navigation={navigation}
-      />
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
@@ -56,17 +42,17 @@ export default function UserScreen({
       />
       <ScrollView style={styles.scrollContainer}>
         <Card containerStyle={styles.card}>
-          { data?.allUsers.map((item: IUserWithAvatarAndNavigation) => (
-          <UserItemComponent
-            key={item._id}
-            _id={item._id}
-            firstname={item.firstname}
-            lastname={item.lastname}
-            position={item.position}
-            avatarSize={64}
-            navigation={navigation}
-          />
-        ))}
+          {data?.allUsers.map((item: IUserWithAvatarAndNavigation) => (
+            <UserItemComponent
+              key={item._id}
+              _id={item._id}
+              firstname={item.firstname}
+              lastname={item.lastname}
+              position={item.position}
+              avatarSize={64}
+              navigation={navigation}
+            />
+          ))}
         </Card>
       </ScrollView>
     </SafeAreaView>
