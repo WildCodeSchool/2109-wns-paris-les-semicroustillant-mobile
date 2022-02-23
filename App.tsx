@@ -11,6 +11,14 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 })
 
+/* // Initialize Apollo Client
+const client = new ApolloClient({
+  // URI with Docker
+  // uri: 'http://localhost:5050/graphql',
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+}); */
+
 export default function App() {
 	const isLoadingComplete = useCachedResources()
 	const colorScheme = useColorScheme()

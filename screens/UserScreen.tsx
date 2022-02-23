@@ -6,22 +6,9 @@ import {
 	ListRenderItem,
 } from 'react-native'
 import { Card, SearchBar } from 'react-native-elements'
-import { RootTabScreenProps, IUserItem } from '../types'
-import UserItemComponent from '../components/UserItemComponent'
-
 import { gql, useQuery } from '@apollo/client'
-
-// const USERS_QUERY = gql`
-//   query GetAllUsers {
-//   allUsers {
-//     _id
-//     firstname
-//     lastname
-//     position
-//     email
-//   }
-// }
-// `
+import UserItemComponent from '../components/UserItemComponent'
+import { RootTabScreenProps, IUserItem } from '../types'
 
 export const fakeData: IUserItem[] = [
 	{
@@ -70,18 +57,26 @@ export const fakeData: IUserItem[] = [
 		position: 'Product Owner',
 	},
 ]
+const USERS_QUERY = gql`
+	query GetAllUsers {
+		allUsers {
+			_id
+			firstname
+			lastname
+			position
+			email
+		}
+	}
+`
 
 export default function UserScreen({
 	navigation,
 }: RootTabScreenProps<'Users'>) {
+	const { data } = useQuery<{ allUsers: IUserItem[] }>(USERS_QUERY)
 	const [search, setSearch] = useState('')
 	const updateSearch = (search: string) => {
 		setSearch(search)
 	}
-
-	// const { data } = useQuery(USERS_QUERY);
-
-	// console.log('DATA', data);
 
 	const renderItem: ListRenderItem<IUserItem> = ({ item }) => {
 		return (
@@ -109,7 +104,7 @@ export default function UserScreen({
 			<Card containerStyle={styles.card}>
 				<FlatList
 					style={{ height: '100%' }}
-					data={fakeData}
+					data={data?.allUsers}
 					keyExtractor={(item) => item._id}
 					renderItem={renderItem}
 				/>
