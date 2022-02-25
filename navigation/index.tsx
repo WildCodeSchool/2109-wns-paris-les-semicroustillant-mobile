@@ -13,7 +13,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import * as React from 'react'
 import { ColorSchemeName, Pressable } from 'react-native'
-
+// import IColorScheme from "../types";
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
 import SettingsScreen from '../screens/SettingsScreen'
@@ -22,8 +22,9 @@ import LoginScreen from '../screens/LoginScreen'
 import UserScreen from '../screens/UserScreen'
 import UserEditScreen from '../screens/UserEditScreen'
 import ProjectsScreen from '../screens/ProjectsScreen'
-import TasksScreen from '../screens/TasksScreen'
 import ProjectDetails from '../screens/ProjectDetails'
+import TasksScreen from '../screens/TasksScreen'
+import DetailedTaskScreen from '../screens/DetailedTaskScreen'
 import {
 	RootStackParamList,
 	RootTabParamList,
@@ -44,7 +45,7 @@ export default function Navigation({
 			linking={LinkingConfiguration}
 			theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
 		>
-			<RootNavigator />
+			<RootNavigator colorScheme={colorScheme} />
 		</NavigationContainer>
 	)
 }
@@ -54,8 +55,9 @@ export default function Navigation({
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>()
+const _id = '62158c4150850e86b4f79c0b'
 
-function RootNavigator() {
+function RootNavigator({ colorScheme }: { colorScheme: ColorSchemeName }) {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
@@ -76,18 +78,27 @@ function RootNavigator() {
 					name='UserEdit'
 					component={UserEditScreen}
 					options={{
-						title: 'Edit a user',
+						headerShown: false,
 					}}
 				/>
-			</Stack.Group>
-			<Stack.Group screenOptions={{ presentation: 'modal' }}>
-				<Stack.Screen
-					name='ProjectDetails'
-					component={ProjectDetails}
-					options={{
-						title: 'Project Details',
-					}}
-				/>
+				<Stack.Group screenOptions={{ presentation: 'modal' }}>
+					<Stack.Screen
+						name='ProjectDetails'
+						component={ProjectDetails}
+						options={{
+							title: 'Project Details',
+						}}
+					/>
+				</Stack.Group>
+				<Stack.Group screenOptions={{ presentation: 'modal' }}>
+					<Stack.Screen
+						name='DetailedTask'
+						component={DetailedTaskScreen}
+						options={() => ({
+							title: 'Details on task',
+						})}
+					/>
+				</Stack.Group>
 			</Stack.Group>
 		</Stack.Navigator>
 	)
@@ -187,6 +198,7 @@ function BottomTabNavigator() {
 					),
 				})}
 			/>
+
 			<BottomTab.Screen
 				name='Users'
 				component={UserScreen}

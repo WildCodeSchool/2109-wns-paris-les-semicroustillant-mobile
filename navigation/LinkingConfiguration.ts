@@ -15,16 +15,6 @@ const linking: LinkingOptions<RootStackParamList> = {
 		screens: {
 			Root: {
 				screens: {
-					TabOne: {
-						screens: {
-							TabOneScreen: 'one',
-						},
-					},
-					TabTwo: {
-						screens: {
-							TabTwoScreen: 'two',
-						},
-					},
 					Login: {
 						screens: {
 							LoginScreen: 'Login',
@@ -32,12 +22,12 @@ const linking: LinkingOptions<RootStackParamList> = {
 					},
 					Projects: {
 						screens: {
-							ProjectsScreen: 'Project',
+							ProjectsScreen: 'Projects',
 						},
 					},
 					Tasks: {
 						screens: {
-							TasksScreen: 'Task',
+							TasksScreen: 'Tasks',
 						},
 					},
 					Users: {
@@ -47,7 +37,7 @@ const linking: LinkingOptions<RootStackParamList> = {
 					},
 				},
 			},
-
+			DetailedTask: 'DetailedTask',
 			Settings: 'Settings',
 			UserEdit: 'UserEdit',
 			ProjectDetails: 'ProjectDetails',

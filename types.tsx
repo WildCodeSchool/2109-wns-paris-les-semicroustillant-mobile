@@ -22,6 +22,7 @@ export type RootStackParamList = {
 	UserEdit: { _id: string }
 	ProjectDetails: { projectId: string }
 	NotFound: undefined
+	DetailedTask: { _id: string }
 }
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -44,6 +45,9 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 		NativeStackScreenProps<RootStackParamList>
 	>
 
+/* ------------------------------- */
+/* ------- USER INTERFACES ------- */
+/* ------------------------------- */
 export interface IUser {
 	_id: string
 	firstname: string
@@ -54,8 +58,20 @@ export interface IUser {
 	position: string
 }
 
-export interface IUserItem extends IUser {
-	// navigation?: RootTabScreenProps<'Users'>;
+export interface IUserWithAvatar extends IUser {
 	avatarSize?: number
-	navigation?: {}
+}
+
+export interface IUserWithAvatarAndNavigation extends IUserWithAvatar {
+	navigation?: { navigate: (name: string, params: { _id: string }) => void }
+}
+
+/* ------------------------------- */
+/* ----- PROJECTS INTERFACES ----- */
+/* ------------------------------- */
+export interface IProject {
+	_id: string
+	name: string
+	projectOwner: string
+	members?: string[]
 }

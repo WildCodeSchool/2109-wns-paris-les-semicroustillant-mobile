@@ -20,7 +20,7 @@ const client = new ApolloClient({
 	//#local
 	//uri: 'http://localhost:4000/graphql',
 	//#phone
-	uri: `http://${api}:5050/graphql`,
+	uri: `http://${api}:4000/graphql`,
 	cache: new InMemoryCache(),
 })
 

@@ -5,7 +5,7 @@ type AvatarData = {
 	position: string
 	lastname: string
 	firstname: string
-	avatarSize: number
+	avatarSize?: number
 }
 
 const AvatarComponent = ({
