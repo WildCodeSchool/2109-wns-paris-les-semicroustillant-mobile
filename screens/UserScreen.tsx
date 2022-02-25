@@ -1,75 +1,61 @@
-import { StyleSheet, SafeAreaView, SectionList, Pressable } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { FontAwesome, Feather } from '@expo/vector-icons';
-import { RootTabScreenProps } from '../types';
-import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView } from 'react-native';
+import { Card, SearchBar } from 'react-native-elements';
+import { gql, useQuery } from '@apollo/client';
+import UserItemComponent from '../components/UserItemComponent';
+import { SafeAreaView } from '../components/Themed';
+import {
+  RootTabScreenProps,
+  IUser,
+  IUserWithAvatarAndNavigation,
+} from '../types';
 
-const fakeData: any = [
-  {
-    data: [
-      {
-        _id: 1,
-        firstname: 'Bobby',
-        lastname: 'Billy',
-        email: 'bobi@email.com',
-        hash: 'myhashbob',
-        role: 'user',
-        position: 'Developer',
-      },
-      {
-        _id: 2,
-        firstname: 'Jane',
-        lastname: 'Fixme',
-        email: 'jfix@email.com',
-        hash: 'myhashfix',
-        role: 'user',
-        position: 'Developer',
-      },
-    ],
-  },
-];
+const USERS_QUERY = gql`
+  query GetAllUsers {
+    allUsers {
+      _id
+      firstname
+      lastname
+      position
+      email
+    }
+  }
+`;
 
 export default function UserScreen({
   navigation,
 }: RootTabScreenProps<'Users'>) {
-  const colorScheme = useColorScheme();
-
-  const UserItem = (user: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.names}>{user.item.firstname}</Text>
-        <Text style={styles.names}>{user.item.lastname}</Text>
-        <Text style={styles.position}>{user.item.position}</Text>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <Pressable
-          onPress={() => navigation.navigate('UserEdit', user.item._id)}
-          style={({ pressed }) => ({
-            opacity: pressed ? 0.5 : 1,
-          })}
-        >
-          <Feather
-            name="edit"
-            size={25}
-            color={Colors[colorScheme].text}
-            style={{ marginRight: 15 }}
-          />
-        </Pressable>
-      </View>
-    );
+  const { data } = useQuery<{ allUsers: IUser[] }>(USERS_QUERY);
+  const [search, setSearch] = useState('');
+  const updateSearch = (search: string) => {
+    setSearch(search);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <SectionList
-        sections={fakeData}
-        keyExtractor={(item: any) => item._id}
-        renderItem={({ item }: any) => <UserItem item={item} />}
+      <SearchBar
+        platform="ios"
+        placeholder="Search"
+        containerStyle={styles.searchbarContainer}
+        // @ts-ignore
+        onChangeText={updateSearch}
+        value={search}
       />
+      <ScrollView style={styles.scrollContainer}>
+        <Card containerStyle={styles.card}>
+          {data?.allUsers.map((item: IUserWithAvatarAndNavigation) => (
+            <UserItemComponent
+              key={item._id}
+              _id={item._id}
+              firstname={item.firstname}
+              lastname={item.lastname}
+              position={item.position}
+              avatarSize={64}
+              navigation={navigation}
+            />
+          ))}
+        </Card>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -78,33 +64,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'blue',
-    borderWidth: 2,
+    width: '100%',
   },
-  item: {
-    backgroundColor: '#c5d1fc',
-    padding: 20,
-    marginVertical: 8,
-    borderRadius: 15,
-
-    borderColor: 'red',
-    borderWidth: 10,
+  card: {
+    width: '100%',
+    flex: 1,
+    padding: 0,
+    margin: 0,
+    borderWidth: 0,
   },
-  names: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  searchbarContainer: {
+    backgroundColor: 'transparent',
   },
-  position: {
-    fontSize: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  scrollContainer: {
+    width: '100%',
   },
 });

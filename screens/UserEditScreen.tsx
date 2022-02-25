@@ -1,95 +1,308 @@
-import { StyleSheet, SafeAreaView, SectionList, Pressable } from "react-native";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
-import useColorScheme from "../hooks/useColorScheme";
+import { Fragment, useState } from 'react';
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Pressable,
+  // TextInput,
+} from 'react-native';
+import { Card, Divider } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import { gql, useQuery } from '@apollo/client';
+import { Text, View } from '../components/Themed';
+import { RootTabScreenProps, IUser, IProject } from '../types';
 
-export default function UserEditScreen({ route }: RootTabScreenProps<"Users">) {
-  const colorScheme = useColorScheme();
+// interface IQueryResult {
+//   _id: string;
+//   name: string;
+//   description: string;
+//   status: string;
+//   advancement: number;
+// }
 
-  const fakeData: any = [
+const GET_PROJECTS_BY_USERID_QUERY = gql`
+  query GetProjectsByUserId {
+    getProjectsByUserId {
+      name
+    }
+  }
+`;
+
+const GET_ALL_PROJECTS = gql`
+  query GetAllProjects {
+    getAllProjects {
+      _id
+      name
+      projectOwner
+      members
+    }
+  }
+`;
+
+const ONE_USER_QUERY = gql`
+  query getOneUser($userId: String!) {
+    getOneUser(userId: $userId) {
+      _id
+      firstname
+      lastname
+      email
+      position
+    }
+  }
+`;
+
+export default function UserEditScreen({
+  route,
+  navigation,
+}: RootTabScreenProps<'Users'>) {
+  const [editPersonalInfo, setEditPersonalInfo] = useState(false);
+  const [editRole, setEditRole] = useState(false);
+  const { data: userData } = useQuery<{ getOneUser: IUser }>(ONE_USER_QUERY, {
+    variables: { userId: route.params?.['_id'] },
+  });
+  const user = userData?.getOneUser;
+
+  const { data: projectData } = useQuery<{ getProjectsByUserId: IProject[] }>(
+    GET_PROJECTS_BY_USERID_QUERY,
     {
-      data: [
-        route.params === 1
-          ? {
-              _id: 1,
-              firstname: "Bobby",
-              lastname: "Billy",
-              email: "bobi@email.com",
-              hash: "myhashbob",
-              role: "user",
-              position: "Developer",
-            }
-          : {
-              _id: 2,
-              firstname: "Jane",
-              lastname: "Fixme",
-              email: "jfix@email.com",
-              hash: "myhashfix",
-              role: "user",
-              position: "Developer",
-            },
-      ],
-    },
-  ];
+      variables: { userId: route.params?.['_id'] },
+    }
+  );
+  const projects = projectData?.getProjectsByUserId;
 
-  const UserItem = (user: any) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.names}>{user.item.firstname}</Text>
-        <Text style={styles.names}>{user.item.lastname}</Text>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <Text style={styles.position}>{user.item.email}</Text>
-        <Text style={styles.position}>{user.item.position}</Text>
-      </View>
-    );
-  };
+  const { data: allProjectData } =
+    useQuery<{ getAllProjects: IProject[] }>(GET_ALL_PROJECTS);
+  const allProjects = allProjectData?.getAllProjects;
+
+  console.log('projectData', allProjects);
+
+  console.log('CLICK', editPersonalInfo);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SectionList
-        sections={fakeData}
-        keyExtractor={(item: any) => item._id}
-        renderItem={({ item }: any) => <UserItem item={item} />}
-      />
+    <SafeAreaView style={styles.mainContainer}>
+      {/* ----- HEADER ----- */}
+      <Card containerStyle={styles.card}>
+        <View style={styles.header}>
+          <Pressable
+            onPress={() => navigation?.navigate('Users')}
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.5 : 1,
+              position: 'absolute',
+              zIndex: 1,
+            })}
+          >
+            <Ionicons
+              name="ios-chevron-back"
+              color={'#F50D51'}
+              size={30}
+              style={{ paddingLeft: 15 }}
+            />
+          </Pressable>
+
+          <View style={styles.innerHeader}>
+            <Text style={styles.mainTitle}>
+              {user?.firstname} {user?.lastname}
+            </Text>
+          </View>
+        </View>
+        <Divider />
+        {/* ----- MAIN CONTENT ----- */}
+        <View style={styles.secondaryContainer}>
+          <ScrollView style={styles.scrollContainer}>
+            {/* ----- PERSONAL INFO ----- */}
+            <View style={styles.userInfoCard}>
+              <View style={styles.userInfoCardHeader}>
+                <Text style={styles.userInfoCardHeaderTitle}>
+                  Personal information
+                </Text>
+                <Pressable
+                  onPress={() => setEditPersonalInfo(!editPersonalInfo)}
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.5 : 1,
+                  })}
+                >
+                  <Ionicons
+                    name={
+                      editPersonalInfo ? 'ios-checkmark' : 'ios-create-outline'
+                    }
+                    size={30}
+                    color={'#F50D51'}
+                  />
+                </Pressable>
+              </View>
+
+              <View style={styles.userInfoCardContent}>
+                <View style={styles.userInfoCardContentSubTitle}>
+                  <Text style={styles.subTitle}>Firstname</Text>
+                  <Text style={styles.subTitle}>Lastname</Text>
+                  <Text style={styles.subTitle}>E-mail</Text>
+                </View>
+
+                <View style={styles.userInfoCardContentSubContent}>
+                  {/* <TextInput
+                    style={styles.subInfo}
+                    // onChangeText={onChangeText}
+                    value={user?.firstname}
+                    editable={editPersonalInfo}
+                  /> */}
+                  <Text style={styles.subInfo}>{user?.firstname}</Text>
+                  <Text style={styles.subInfo}>{user?.lastname}</Text>
+                  <Text style={styles.subInfo}>{user?.email}</Text>
+                </View>
+              </View>
+            </View>
+
+            {/* ----- USER'S ROLE ----- */}
+            <View style={styles.userInfoCard}>
+              <View style={styles.userInfoCardHeader}>
+                <Text style={styles.userInfoCardHeaderTitle}>Role</Text>
+                <Pressable
+                  onPress={() => setEditRole(!editRole)}
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.5 : 1,
+                  })}
+                >
+                  <Ionicons
+                    name={editRole ? 'ios-checkmark' : 'ios-create-outline'}
+                    size={30}
+                    color={'#F50D51'}
+                  />
+                </Pressable>
+              </View>
+
+              <View style={styles.userInfoCardContent}>
+                <View style={styles.userInfoCardContentSubTitle}>
+                  <Text style={styles.subTitle}>Position</Text>
+                  <Text style={styles.subTitle}>Role</Text>
+                </View>
+
+                <View style={styles.userInfoCardContentSubContent}>
+                  <Text style={styles.subInfo}>{user?.position}</Text>
+                  <Text style={styles.subInfo}>{user?.role}</Text>
+                </View>
+              </View>
+            </View>
+
+            {/* ----- USERS'S PROJECTS ----- */}
+            <View style={styles.userInfoCard}>
+              <View style={styles.userInfoCardHeader}>
+                <Text style={styles.userInfoCardHeaderTitle}>Projects</Text>
+              </View>
+
+              {allProjects?.map((project) => (
+                <Fragment key={project._id}>
+                  <View style={styles.userInfoCardProjects}>
+                    <Text style={styles.subInfo}>{project?.name}</Text>
+                    <Pressable
+                      onPress={() => console.log('BIM')}
+                      style={({ pressed }) => ({
+                        opacity: pressed ? 0.5 : 1,
+                      })}
+                    >
+                      <Ionicons
+                        name="ios-chevron-forward"
+                        size={30}
+                        color={'#F50D51'}
+                      />
+                    </Pressable>
+                  </View>
+                  <Divider />
+                </Fragment>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </Card>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "blue",
-    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  item: {
-    backgroundColor: "#c5d1fc",
+  secondaryContainer: {
+    height: '100%',
     padding: 20,
-    marginVertical: 8,
+  },
+  card: {
+    height: '100%',
+    width: '100%',
+    shadowOpacity: 0,
+    flex: 1,
+    marginTop: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    padding: 0,
+    borderWidth: 0,
+  },
+  userInfoCard: {
+    padding: 25,
     borderRadius: 15,
-
-    borderColor: "red",
-    borderWidth: 10,
+    marginBottom: 20,
+    borderColor: 'gainsboro',
+    borderWidth: 1,
   },
-  names: {
+  userInfoCardHeader: {
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  userInfoCardHeaderTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    color: '#F50D51',
   },
-  position: {
-    fontSize: 20,
+  userInfoCardContent: {
+    flexDirection: 'row',
+    flex: 1,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  userInfoCardContentSubTitle: {
+    justifyContent: 'space-between',
+    flex: 2,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  userInfoCardContentSubContent: {
+    justifyContent: 'space-between',
+    flexWrap: 'nowrap',
+    flex: 3,
+  },
+  subTitle: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  subInfo: {
+    fontSize: 16,
+  },
+  userInfoCardProjects: {
+    marginBottom: 10,
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  scrollContainer: {
+    width: '100%',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // margin: 0,
+  },
+  innerHeader: {
+    justifyContent: 'space-between',
+    flex: 1,
+    // zIndex: -1,
+  },
+  mainTitle: {
+    flexWrap: 'nowrap',
+    textAlign: 'center',
+    fontSize: 23,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 20,
+    marginLeft: 20,
   },
 });
