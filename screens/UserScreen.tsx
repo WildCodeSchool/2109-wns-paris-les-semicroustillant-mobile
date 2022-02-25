@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { Card, SearchBar } from 'react-native-elements';
 import { gql, useQuery } from '@apollo/client';
 import UserItemComponent from '../components/UserItemComponent';
+import { SafeAreaView } from '../components/Themed';
 import {
   RootTabScreenProps,
   IUser,
