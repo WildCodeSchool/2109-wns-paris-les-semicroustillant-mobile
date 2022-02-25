@@ -42,6 +42,9 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
+/* ------------------------------- */
+/* ------- USER INTERFACES ------- */
+/* ------------------------------- */
 export interface IUser {
   _id: string;
   firstname: string;
@@ -58,4 +61,14 @@ export interface IUserWithAvatar extends IUser {
 
 export interface IUserWithAvatarAndNavigation extends IUserWithAvatar {
   navigation?: { navigate: (name: string, params: { _id: string }) => void };
+}
+
+/* ------------------------------- */
+/* ----- PROJECTS INTERFACES ----- */
+/* ------------------------------- */
+export interface IProject {
+  _id: string;
+  name: string;
+  projectOwner: string;
+  members?: string[];
 }
