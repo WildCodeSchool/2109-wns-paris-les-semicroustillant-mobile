@@ -77,7 +77,7 @@ function RootNavigator() {
           name="UserEdit"
           component={UserEditScreen}
           options={{
-            title: "Details",
+            headerShown: false,
           }}
         />
       </Stack.Group>

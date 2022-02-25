@@ -38,9 +38,8 @@ const UserItem = ({
           >
             <Ionicons
               name="ios-chevron-forward"
-              size={25}
+              size={40}
               color={'#F50D51'}
-              style={{ fontSize: 40 }}
             />
           </Pressable>
         </View>
@@ -54,8 +53,8 @@ const styles = StyleSheet.create({
   userItem: {
     paddingTop: 20,
     paddingBottom: 20,
-    paddingRight: 10,
-    paddingLeft: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
