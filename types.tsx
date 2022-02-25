@@ -3,12 +3,12 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
-} from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+} from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
@@ -19,7 +19,7 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Settings: undefined;
-  UserEdit: undefined;
+  UserEdit: { _id: string };
   NotFound: undefined;
 };
 
@@ -33,6 +33,7 @@ export type RootTabParamList = {
   Projects: undefined;
   Tasks: undefined;
   Users: undefined;
+  UserEdit: { _id: string };
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
@@ -40,3 +41,34 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+/* ------------------------------- */
+/* ------- USER INTERFACES ------- */
+/* ------------------------------- */
+export interface IUser {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email?: string;
+  hash?: string;
+  role?: string;
+  position: string;
+}
+
+export interface IUserWithAvatar extends IUser {
+  avatarSize?: number;
+}
+
+export interface IUserWithAvatarAndNavigation extends IUserWithAvatar {
+  navigation?: { navigate: (name: string, params: { _id: string }) => void };
+}
+
+/* ------------------------------- */
+/* ----- PROJECTS INTERFACES ----- */
+/* ------------------------------- */
+export interface IProject {
+  _id: string;
+  name: string;
+  projectOwner: string;
+  members?: string[];
+}

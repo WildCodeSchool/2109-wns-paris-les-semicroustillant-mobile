@@ -11,7 +11,6 @@ export default function TabOneScreen({
 }: RootTabScreenProps<'Login'>) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  console.log(username, password);
 
   const onLogin = () => {
     navigation.navigate('Projects');
@@ -47,9 +46,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	image: {
-    flex: 1,
-    resizeMode: 'contain',
-    width: '80%',
+    width: '90%',
+		height: '40%',
 	},
 	input: {
 		borderWidth: 0.5,
