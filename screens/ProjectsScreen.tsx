@@ -56,10 +56,6 @@ export default function Projects({
 			getAllProjects {
 				_id
 				name
-				projectOwner
-				members {
-					_id
-				}
 			}
 		}
 	`
