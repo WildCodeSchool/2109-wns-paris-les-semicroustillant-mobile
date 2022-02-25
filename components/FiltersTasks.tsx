@@ -5,7 +5,11 @@ import { CheckBox } from "react-native-elements";
 import { StyleSheet } from "react-native";
 import { View } from "./Themed";
 
-const FiltersTasks = () => {
+import myColors from "../constants/Colors";
+
+const FiltersTasks = ({}) => {
+  DropDownPicker.setTheme("DARK");
+
   interface IItem {
     label: string;
     value: string;
@@ -25,16 +29,14 @@ const FiltersTasks = () => {
   const [check2, setCheck2] = useState(false);
 
   return (
-    <View
-      style={{
-        display: "flex",
-        margin: "auto",
-        width: "90%",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
+      {/* TODO: Change colors for dropdown. Ex: checkboxes inside it */}
       <DropDownPicker
-        // containerStyle={{ width: "90%" }}
+        translation={{
+          SELECTED_ITEMS_COUNT_TEXT: "{count} project(s) have been selected",
+          NOTHING_TO_SHOW: "No projects available",
+        }}
+        placeholder="All projects"
         multiple={true}
         min={0}
         max={5}
@@ -45,20 +47,22 @@ const FiltersTasks = () => {
         setValue={setValue}
         setItems={setItems}
       />
-      <View>
+      <View style={{ backgroundColor: "transparent" }}>
         <CheckBox
-          containerStyle={{ marginTop: 10 }}
-          wrapperStyle={{
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
+          containerStyle={styles.firstCheckboxContainerStyle}
+          wrapperStyle={styles.checkboxWrapperStyle}
+          checkedColor="#F50D51"
+          uncheckedColor="#F50D51"
           center
           title="Assigned to me only"
           checked={check1}
           onPress={() => setCheck1(!check1)}
         />
         <CheckBox
-          wrapperStyle={{ display: "flex", justifyContent: "flex-start" }}
+          containerStyle={styles.secondCheckboxContainerStyle}
+          uncheckedColor="#F50D51"
+          checkedColor="#F50D51"
+          wrapperStyle={styles.checkboxWrapperStyle}
           center
           title="Hide done"
           checked={check2}
@@ -69,6 +73,18 @@ const FiltersTasks = () => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { alignItems: "center" },
+  firstCheckboxContainerStyle: {
+    borderColor: myColors.projectColors.text,
+    marginTop: 20,
+    backgroundColor: myColors.dark.EBONY_CLAY,
+  },
+  secondCheckboxContainerStyle: {
+    borderColor: myColors.projectColors.text,
+    backgroundColor: myColors.dark.EBONY_CLAY,
+  },
+  checkboxWrapperStyle: { display: "flex", justifyContent: "flex-start" },
+});
 
 export default FiltersTasks;

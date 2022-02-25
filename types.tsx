@@ -9,6 +9,9 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ColorSchemeName } from "react-native";
+
+import Theme from "react-native";
 
 declare global {
   namespace ReactNavigation {
@@ -21,16 +24,16 @@ export type RootStackParamList = {
   Settings: undefined;
   UserEdit: undefined;
   NotFound: undefined;
+  DetailedTask: { _id: string };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
   Login: undefined;
   Projects: undefined;
+  // Tasks: undefined;
   Tasks: undefined;
   Users: undefined;
 };
