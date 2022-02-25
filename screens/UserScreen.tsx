@@ -1,82 +1,82 @@
-import React, { useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { Card, SearchBar } from 'react-native-elements';
-import { gql, useQuery } from '@apollo/client';
-import UserItemComponent from '../components/UserItemComponent';
-import { SafeAreaView } from '../components/Themed';
+import React, { useState } from 'react'
+import { StyleSheet, ScrollView } from 'react-native'
+import { Card, SearchBar } from 'react-native-elements'
+import { gql, useQuery } from '@apollo/client'
+import UserItemComponent from '../components/UserItemComponent'
+import { SafeAreaView } from '../components/Themed'
 import {
-  RootTabScreenProps,
-  IUser,
-  IUserWithAvatarAndNavigation,
-} from '../types';
+	RootTabScreenProps,
+	IUser,
+	IUserWithAvatarAndNavigation,
+} from '../types'
 
 const USERS_QUERY = gql`
-  query GetAllUsers {
-    allUsers {
-      _id
-      firstname
-      lastname
-      position
-      email
-    }
-  }
-`;
+	query GetAllUsers {
+		allUsers {
+			_id
+			firstname
+			lastname
+			position
+			email
+		}
+	}
+`
 
 export default function UserScreen({
-  navigation,
+	navigation,
 }: RootTabScreenProps<'Users'>) {
-  const { data } = useQuery<{ allUsers: IUser[] }>(USERS_QUERY);
-  const [search, setSearch] = useState('');
-  const updateSearch = (search: string) => {
-    setSearch(search);
-  };
+	const { data } = useQuery<{ allUsers: IUser[] }>(USERS_QUERY)
+	const [search, setSearch] = useState('')
+	const updateSearch = (search: string) => {
+		setSearch(search)
+	}
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <SearchBar
-        platform="ios"
-        placeholder="Search"
-        containerStyle={styles.searchbarContainer}
-        // @ts-ignore
-        onChangeText={updateSearch}
-        value={search}
-      />
-      <ScrollView style={styles.scrollContainer}>
-        <Card containerStyle={styles.card}>
-          {data?.allUsers.map((item: IUserWithAvatarAndNavigation) => (
-            <UserItemComponent
-              key={item._id}
-              _id={item._id}
-              firstname={item.firstname}
-              lastname={item.lastname}
-              position={item.position}
-              avatarSize={64}
-              navigation={navigation}
-            />
-          ))}
-        </Card>
-      </ScrollView>
-    </SafeAreaView>
-  );
+	return (
+		<SafeAreaView style={styles.container}>
+			<SearchBar
+				platform='ios'
+				placeholder='Search'
+				containerStyle={styles.searchbarContainer}
+				// @ts-ignore
+				onChangeText={updateSearch}
+				value={search}
+			/>
+			<ScrollView style={styles.scrollContainer}>
+				<Card containerStyle={styles.card}>
+					{data?.allUsers.map((item: IUserWithAvatarAndNavigation) => (
+						<UserItemComponent
+							key={item._id}
+							_id={item._id}
+							firstname={item.firstname}
+							lastname={item.lastname}
+							position={item.position}
+							avatarSize={64}
+							navigation={navigation}
+						/>
+					))}
+				</Card>
+			</ScrollView>
+		</SafeAreaView>
+	)
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    width: '100%',
-  },
-  card: {
-    width: '100%',
-    flex: 1,
-    padding: 0,
-    margin: 0,
-    borderWidth: 0,
-  },
-  searchbarContainer: {
-    backgroundColor: 'transparent',
-  },
-  scrollContainer: {
-    width: '100%',
-  },
-});
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		width: '100%',
+	},
+	card: {
+		width: '100%',
+		flex: 1,
+		padding: 0,
+		margin: 0,
+		borderWidth: 0,
+	},
+	searchbarContainer: {
+		backgroundColor: 'transparent',
+	},
+	scrollContainer: {
+		width: '100%',
+	},
+})

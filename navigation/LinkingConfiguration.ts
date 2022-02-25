@@ -4,45 +4,46 @@
  * https://reactnavigation.org/docs/configuring-links
  */
 
-import { LinkingOptions } from "@react-navigation/native";
-import * as Linking from "expo-linking";
+import { LinkingOptions } from '@react-navigation/native'
+import * as Linking from 'expo-linking'
 
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from '../types'
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl("/")],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          Login: {
-            screens: {
-              LoginScreen: "Login",
-            },
-          },
-          Projects: {
-            screens: {
-              ProjectsScreen: "Projects",
-            },
-          },
-          Tasks: {
-            screens: {
-              TasksScreen: "Tasks",
-            },
-          },
-          Users: {
-            screens: {
-              UserScreen: "Users",
-            },
-          },
-        },
-      },
-      DetailedTask: "DetailedTask",
-      Settings: "Settings",
-      UserEdit: "UserEdit",
-      NotFound: "*",
-    },
-  },
-};
+	prefixes: [Linking.makeUrl('/')],
+	config: {
+		screens: {
+			Root: {
+				screens: {
+					Login: {
+						screens: {
+							LoginScreen: 'Login',
+						},
+					},
+					Projects: {
+						screens: {
+							ProjectsScreen: 'Projects',
+						},
+					},
+					Tasks: {
+						screens: {
+							TasksScreen: 'Tasks',
+						},
+					},
+					Users: {
+						screens: {
+							UserScreen: 'Users',
+						},
+					},
+				},
+			},
+			DetailedTask: 'DetailedTask',
+			Settings: 'Settings',
+			UserEdit: 'UserEdit',
+			ProjectDetails: 'ProjectDetails',
+			NotFound: '*',
+		},
+	},
+}
 
-export default linking;
+export default linking
