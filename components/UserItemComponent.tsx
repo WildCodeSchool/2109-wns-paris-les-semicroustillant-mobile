@@ -6,7 +6,7 @@ import { Text, View } from '../components/Themed';
 import AvatarComponent from './AvatarComponent';
 import { IUserWithAvatarAndNavigation } from '../types';
 
-const UserItem = ({
+const UserItemComponent = ({
   _id,
   firstname,
   lastname,
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserItem;
+export default UserItemComponent;
