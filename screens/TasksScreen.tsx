@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, FlatList } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { View } from "../components/Themed";
 
 import { RootTabScreenProps } from "../types";
