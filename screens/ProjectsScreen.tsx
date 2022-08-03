@@ -62,6 +62,7 @@ export default function Projects({
 
 	const { loading, data } = useQuery<IQuery>(GET_PROJECTS)
 
+	console.log('hi')
 	console.log(data)
 
 	const Item = ({ _id, name, description, status, advancement }: Idata) => {

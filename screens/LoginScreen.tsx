@@ -1,20 +1,53 @@
 import { StyleSheet, Image, TextInput, Text, Pressable } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
+import { useLazyQuery, gql } from '@apollo/client'
 
 import { View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
 import { useState } from 'react'
 import Logo from '../assets/logo/biscotteLogo.png'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function TabOneScreen({
 	navigation,
 }: RootTabScreenProps<'Login'>) {
-	const [username, setUsername] = useState('')
+	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [passwordVisible, setPasswordVisible] = useState(false)
 
-	const onLogin = () => {
-		navigation.navigate('Projects')
+	// const onLogin = () => {
+	// 	navigation.navigate('Projects')
+	// }
+
+	const LOGIN = gql`
+		query login($email: String!, $password: String!) {
+			login(email: $email, password: $password)
+		}
+	`
+	const [getToken, { loading }] = useLazyQuery(LOGIN, {
+		onCompleted: (data) => {
+			console.log(data.login)
+			AsyncStorage.setItem('@token', data.login)
+			console.log('storage', AsyncStorage.getItem('@test'))
+			navigation.navigate('Projects')
+		},
+		onError: (err) => {
+			console.log(err.message)
+		},
+		notifyOnNetworkStatusChange: true,
+	})
+	const storeData = async () => {
+		try {
+			await AsyncStorage.setItem('@storage_Key', 'test')
+			console.log('storage', AsyncStorage.getItem('@storage_Key'))
+		} catch (e) {
+			console.log('error', e)
+		}
+	}
+	// const token = localStorage.getItem('token')
+
+	const handleSubmit = () => {
+		getToken({ variables: { email, password } })
 	}
 
 	return (
@@ -22,11 +55,11 @@ export default function TabOneScreen({
 			<Image style={styles.image} source={Logo} />
 			<Text style={styles.title}>Login</Text>
 			<TextInput
-				placeholder='Username'
-				value={username}
-				onChangeText={setUsername}
+				placeholder='Email'
+				value={email}
+				onChangeText={setEmail}
 				style={styles.input}
-				textContentType='username'
+				textContentType='emailAddress'
 			/>
 			<View style={styles.passwordInput}>
 				<TextInput
@@ -54,7 +87,7 @@ export default function TabOneScreen({
 				)}
 			</View>
 			<View style={styles.container}>
-				<Pressable style={styles.button} onPress={onLogin}>
+				<Pressable style={styles.button} onPress={storeData}>
 					<Text style={styles.buttonText}>Log In</Text>
 				</Pressable>
 			</View>
