@@ -1,6 +1,7 @@
 import { StyleSheet, Pressable, FlatList, ListRenderItem } from 'react-native'
 import { useQuery, gql } from '@apollo/client'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Text, View } from '../components/Themed'
 import { RootTabScreenProps } from '../types'
 import { Card } from 'react-native-elements'
@@ -35,35 +36,35 @@ export default function Projects({
 		},
 	]
 
-	interface Idata {
-		_id: string
-		name: string
-		description: string
-		status: string
-		advancement: number
-	}
-
-	interface IQuery {
-		_id: string
-		name: string
-		projectOwner: string
-		members?: string[]
-		GetAllProjects: () => void
-	}
-
 	const GET_PROJECTS = gql`
 		query GetAllProjects {
 			getAllProjects {
 				_id
 				name
+				description
+				status
 			}
 		}
 	`
+	interface Idata {
+		_id: string
+		name: string
+		description: string
+		status: string
+		projectOwner?: string
+		advancement: number
+		members?: string[]
+	}
 
-	const { loading, data } = useQuery<IQuery>(GET_PROJECTS)
+	interface IgetAllProjects {
+		getAllProjects: Idata[]
+	}
 
-	console.log('hi')
-	console.log(data)
+	const { loading, data } = useQuery<IgetAllProjects>(GET_PROJECTS)
+
+	const projects = data && data.getAllProjects
+
+	console.log('data', data)
 
 	const Item = ({ _id, name, description, status, advancement }: Idata) => {
 		return (
@@ -110,7 +111,7 @@ export default function Projects({
 	return (
 		<View style={styles.screen}>
 			<FlatList
-				data={fakeData}
+				data={projects}
 				renderItem={renderItem}
 				keyExtractor={(fakedata) => fakedata._id}
 			/>

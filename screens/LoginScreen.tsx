@@ -1,4 +1,11 @@
-import { StyleSheet, Image, TextInput, Text, Pressable } from 'react-native'
+import {
+	StyleSheet,
+	Image,
+	TextInput,
+	Text,
+	Pressable,
+	TouchableHighlight,
+} from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { useLazyQuery, gql } from '@apollo/client'
 
@@ -15,36 +22,24 @@ export default function TabOneScreen({
 	const [password, setPassword] = useState('')
 	const [passwordVisible, setPasswordVisible] = useState(false)
 
-	// const onLogin = () => {
-	// 	navigation.navigate('Projects')
-	// }
-
 	const LOGIN = gql`
 		query login($email: String!, $password: String!) {
 			login(email: $email, password: $password)
 		}
 	`
 	const [getToken, { loading }] = useLazyQuery(LOGIN, {
-		onCompleted: (data) => {
-			console.log(data.login)
-			AsyncStorage.setItem('@token', data.login)
-			console.log('storage', AsyncStorage.getItem('@test'))
-			navigation.navigate('Projects')
+		onCompleted: async (data) => {
+			await AsyncStorage.setItem('@token', data.login)
+			const value = await AsyncStorage.getItem('@token')
+			if (value !== null) {
+				navigation.navigate('Projects')
+			}
 		},
 		onError: (err) => {
 			console.log(err.message)
 		},
 		notifyOnNetworkStatusChange: true,
 	})
-	const storeData = async () => {
-		try {
-			await AsyncStorage.setItem('@storage_Key', 'test')
-			console.log('storage', AsyncStorage.getItem('@storage_Key'))
-		} catch (e) {
-			console.log('error', e)
-		}
-	}
-	// const token = localStorage.getItem('token')
 
 	const handleSubmit = () => {
 		getToken({ variables: { email, password } })
@@ -87,9 +82,9 @@ export default function TabOneScreen({
 				)}
 			</View>
 			<View style={styles.container}>
-				<Pressable style={styles.button} onPress={storeData}>
+				<TouchableHighlight style={styles.button} onPress={handleSubmit}>
 					<Text style={styles.buttonText}>Log In</Text>
-				</Pressable>
+				</TouchableHighlight>
 			</View>
 		</View>
 	)
