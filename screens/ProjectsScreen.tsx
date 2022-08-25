@@ -9,32 +9,32 @@ import { Card } from 'react-native-elements'
 export default function Projects({
 	navigation,
 }: RootTabScreenProps<'Projects'>) {
-	const fakeData = [
-		{
-			_id: '1',
-			name: 'Project 1',
-			description:
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
-			status: 'In progress',
-			advancement: 50,
-		},
-		{
-			_id: '2',
-			name: 'Project 2',
-			description:
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
-			status: 'Done',
-			advancement: 100,
-		},
-		{
-			_id: '3',
-			name: 'Project 3',
-			description:
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
-			status: 'Delayed',
-			advancement: 25,
-		},
-	]
+	// const fakeData = [
+	// 	{
+	// 		_id: '1',
+	// 		name: 'Project 1',
+	// 		description:
+	// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
+	// 		status: 'In progress',
+	// 		advancement: 50,
+	// 	},
+	// 	{
+	// 		_id: '2',
+	// 		name: 'Project 2',
+	// 		description:
+	// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
+	// 		status: 'Done',
+	// 		advancement: 100,
+	// 	},
+	// 	{
+	// 		_id: '3',
+	// 		name: 'Project 3',
+	// 		description:
+	// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae adipisci repudiandae magni voluptas impedit nihil obcaecati.',
+	// 		status: 'Delayed',
+	// 		advancement: 25,
+	// 	},
+	// ]
 
 	const GET_PROJECTS = gql`
 		query GetAllProjects {
@@ -113,7 +113,7 @@ export default function Projects({
 			<FlatList
 				data={projects}
 				renderItem={renderItem}
-				keyExtractor={(fakedata) => fakedata._id}
+				keyExtractor={(project) => project._id}
 			/>
 		</View>
 	)
