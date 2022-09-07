@@ -20,12 +20,20 @@ const AvatarComponent = ({
 	).toUpperCase()
 
 	const avatarColor = (position: string) => {
-		if (position === 'Developer') {
-			return 'orange'
-		}
-		if (position === 'Product Owner') {
-			return '#3d4db7'
-		}
+    switch (position) {
+      case 'Developer':
+        return 'orange';
+      case 'Product Owner':
+        return '#3d4db7';
+      case 'Scrum Master':
+        return 'red';
+      case 'Team Lead':
+        return 'darkgreen';
+      case 'Test Engineer':
+        return 'purple';
+      default:
+        return 'grey';
+    }
 	}
 
 	return (

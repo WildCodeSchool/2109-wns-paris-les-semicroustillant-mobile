@@ -95,8 +95,6 @@ export default function SettingsScreen() {
               onPress={() => {
                 setAboutHide(true);
                 setMenueHide(false);
-                console.log(colorScheme);
-                // Appearance.addChangeListener(listener:);
               }}
               style={styles.text}
             >

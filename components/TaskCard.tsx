@@ -47,7 +47,6 @@ const TaskCard = ({
   due_date: string;
 }) => {
   const colorScheme = useColorScheme();
-  console.log("here", myColors.dark.EBONY_CLAY);
 
   const ColorBackground = myColors.dark.EBONY_CLAY;
   return (

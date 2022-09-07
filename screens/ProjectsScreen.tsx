@@ -43,6 +43,8 @@ export default function Projects({
 				name
 				description
 				status
+				total_tickets
+				completed_tickets
 			}
 		}
 	`
@@ -52,7 +54,8 @@ export default function Projects({
 		description: string
 		status: string
 		projectOwner?: string
-		advancement: number
+		total_tickets: number
+		completed_tickets: number
 		members?: string[]
 	}
 
@@ -64,9 +67,7 @@ export default function Projects({
 
 	const projects = data && data.getAllProjects
 
-	console.log('data', data)
-
-	const Item = ({ _id, name, description, status, advancement }: Idata) => {
+	const Item = ({ _id, name, description, status, total_tickets, completed_tickets }: Idata) => {
 		return (
 			<View style={styles.container}>
 				<Card containerStyle={styles.card}>
@@ -89,7 +90,7 @@ export default function Projects({
 					</View>
 					<View style={styles.bottom}>
 						<Text style={styles.redText}>Advancement: </Text>
-						<Text>{advancement}%</Text>
+						<Text>{Math.floor(completed_tickets / total_tickets * 100) || 0}%</Text>
 					</View>
 				</Card>
 			</View>
@@ -103,7 +104,8 @@ export default function Projects({
 				name={item.name}
 				description={item.description}
 				status={item.status}
-				advancement={item.advancement}
+				total_tickets={item.total_tickets}
+				completed_tickets={item.completed_tickets}
 			/>
 		)
 	}

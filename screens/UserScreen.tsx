@@ -18,6 +18,7 @@ const USERS_QUERY = gql`
 			lastname
 			position
 			email
+			role
 		}
 	}
 `

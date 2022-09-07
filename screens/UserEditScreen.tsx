@@ -4,7 +4,6 @@ import {
 	SafeAreaView,
 	ScrollView,
 	Pressable,
-	// TextInput,
 } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons'
@@ -12,13 +11,6 @@ import { gql, useQuery } from '@apollo/client'
 import { Text, View } from '../components/Themed'
 import { RootTabScreenProps, IUser, IProject } from '../types'
 
-// interface IQueryResult {
-//   _id: string;
-//   name: string;
-//   description: string;
-//   status: string;
-//   advancement: number;
-// }
 
 const GET_PROJECTS_BY_USERID_QUERY = gql`
 	query GetProjectsByUserId {
@@ -47,6 +39,7 @@ const ONE_USER_QUERY = gql`
 			lastname
 			email
 			position
+			role
 		}
 	}
 `
@@ -73,10 +66,6 @@ export default function UserEditScreen({
 	const { data: allProjectData } =
 		useQuery<{ getAllProjects: IProject[] }>(GET_ALL_PROJECTS)
 	const allProjects = allProjectData?.getAllProjects
-
-	console.log('projectData', allProjects)
-
-	console.log('CLICK', editPersonalInfo)
 
 	return (
 		<SafeAreaView style={styles.mainContainer}>
@@ -139,12 +128,6 @@ export default function UserEditScreen({
 								</View>
 
 								<View style={styles.userInfoCardContentSubContent}>
-									{/* <TextInput
-                    style={styles.subInfo}
-                    // onChangeText={onChangeText}
-                    value={user?.firstname}
-                    editable={editPersonalInfo}
-                  /> */}
 									<Text style={styles.subInfo}>{user?.firstname}</Text>
 									<Text style={styles.subInfo}>{user?.lastname}</Text>
 									<Text style={styles.subInfo}>{user?.email}</Text>
@@ -194,7 +177,7 @@ export default function UserEditScreen({
 									<View style={styles.userInfoCardProjects}>
 										<Text style={styles.subInfo}>{project?.name}</Text>
 										<Pressable
-											onPress={() => console.log('BIM')}
+											onPress={() => console.log('action')}
 											style={({ pressed }) => ({
 												opacity: pressed ? 0.5 : 1,
 											})}
@@ -289,12 +272,10 @@ const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		// margin: 0,
 	},
 	innerHeader: {
 		justifyContent: 'space-between',
 		flex: 1,
-		// zIndex: -1,
 	},
 	mainTitle: {
 		flexWrap: 'nowrap',
